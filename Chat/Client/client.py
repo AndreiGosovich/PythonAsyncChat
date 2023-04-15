@@ -1,5 +1,6 @@
 import json
 import sys
+import calendar
 from socket import *
 from datetime import datetime, timezone
 
@@ -9,8 +10,7 @@ def get_arguments():
     if len(args) > 1:
         addr = args[1]
     else:
-        print('Invalid address')
-        exit(1)
+        raise SystemExit('Invalid address')
 
     port = 0
     if len(args) > 2:
@@ -22,7 +22,7 @@ def get_arguments():
 def create_presence_message(account_name, status='online', _type='status'):
     return json.dumps({
         "action": "presence",
-        "time":  datetime.now(timezone.utc).timestamp() * 1000,
+        "time":  calendar.timegm(datetime.now(timezone.utc).utctimetuple()),
         "type": _type,
         "user": {
             "account_name": account_name,
@@ -37,16 +37,22 @@ def parse_server_response(data):
     return response_data
 
 
+def get_socket(addr_family, socket_type):
+    s = socket(addr_family, socket_type)  # Создать сокет TCP
+
+    return s
+
+
 def run_chat_client(addr='', port=7777):
     if not addr:
         addr = ''
     if not port:
         port = 7777
 
-    s = socket(AF_INET, SOCK_STREAM)  # Создать сокет TCP
+    s = get_socket(AF_INET, SOCK_STREAM)
     s.connect((addr, port))  # Соединиться с сервером
 
-    msg = create_presence_message('presence')
+    msg = create_presence_message('Andrei')
 
     s.send(msg.encode('utf-8'))
     data = s.recv(1000000)
