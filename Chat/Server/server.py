@@ -1,4 +1,5 @@
 import argparse
+import calendar
 from socket import *
 import json
 from datetime import datetime, timezone
@@ -9,28 +10,39 @@ def get_arguments():
     parser.add_argument('-p', dest='port', type=int, help='Port of server run. Default 7777')
     parser.add_argument('-a', dest='addr', type=str, help='PIP-address listen to. Default ALL')
     args = parser.parse_args()
-    return args
+    return args.addr, args.port
 
 
-def get_response(code, alert):
+def get_socket(addr, port):
+    s = socket(AF_INET, SOCK_STREAM)
+    s.bind((addr, port))
+
+    return s
+
+
+def parse_client_data(data):
+    client_data = json.loads(data)
+
+    return client_data
+
+
+def get_response(client_data):
+    action = client_data['action']
+
+    code = 400
+    alert = 'Неправильный запрос'
+
+    if action == 'presence':
+        code = 200
+        alert = 'Ok'
+
     response = {
             "response": code,
-            "time": datetime.now(timezone.utc).timestamp() * 1000,
+            "time": calendar.timegm(datetime.now(timezone.utc).utctimetuple()),
             "alert": alert,
         }
 
     return json.dumps(response)
-
-
-def parse_client_data(data):
-    response_data = json.loads(data)
-    action = response_data['action']
-
-    if action == 'presence':
-        response_data = get_response(200, 'Ok')
-        return response_data
-
-    return get_response(400, 'Invalid Action')
 
 
 def run_chat_server(addr='', port=7777):
@@ -39,8 +51,7 @@ def run_chat_server(addr='', port=7777):
     if not port:
         port = 7777
 
-    s = socket(AF_INET, SOCK_STREAM)
-    s.bind((addr, port))
+    s = get_socket(addr, port)
     s.listen(5)
     
     while True:
@@ -49,21 +60,18 @@ def run_chat_server(addr='', port=7777):
 
         print(f'Получено сообщение:\n{data}\nот Клиента с адреса: {addr}')
 
-        if data:
-            response_data = parse_client_data(data)
-        else:
-            response_data = get_response(400, 'Invalid client data')
-        
-        msg = response_data
-        
-        client.send(msg.encode('utf-8'))
+        client_data = parse_client_data(data)
+
+        response_data = get_response(client_data)
+
+        client.send(response_data.encode('utf-8'))
         client.close()
 
 
 def main():
     args = get_arguments()
 
-    run_chat_server(args.addr, args.port)
+    run_chat_server(args[0], args[1])
 
 
 if __name__ == '__main__':
