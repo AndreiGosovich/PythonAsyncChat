@@ -1,9 +1,11 @@
 import calendar
+import inspect
 import json
 import logging
 import sys
 from datetime import datetime, timezone
 from socket import *
+from functools import wraps
 
 sys.path.append("../log")
 import client_log_config
@@ -11,6 +13,20 @@ import client_log_config
 logger = logging.getLogger('chat.client')
 
 
+def log():
+    def decorator(func):
+        @wraps(func)
+        def decorated(*args, **kwargs):
+            logger.info(f' Функция {func.__name__} вызвана из функции {inspect.stack()[1].function}')
+            res = func(*args, **kwargs)
+            return res
+
+        return decorated
+
+    return decorator
+
+
+@log()
 def get_arguments():
     logger.debug('Получаем аргументы')
     args = sys.argv
@@ -27,6 +43,7 @@ def get_arguments():
     return addr, port
 
 
+@log()
 def create_presence_message(account_name, status='online', _type='status'):
     logger.debug("Создаём сообщение серверу")
     return json.dumps({
@@ -40,6 +57,7 @@ def create_presence_message(account_name, status='online', _type='status'):
     })
 
 
+@log()
 def parse_server_response(data):
     logger.debug("Парсим ответ сервера")
     response_data = json.loads(data)
@@ -47,6 +65,7 @@ def parse_server_response(data):
     return response_data
 
 
+@log()
 def get_socket(addr_family, socket_type):
     logger.debug("Создаём сокет")
     s = socket(addr_family, socket_type)  # Создать сокет TCP
@@ -54,6 +73,7 @@ def get_socket(addr_family, socket_type):
     return s
 
 
+@log()
 def run_chat_client(addr='', port=7777):
     logger.debug("Запускаем клиент")
     if not addr:
@@ -78,6 +98,7 @@ def run_chat_client(addr='', port=7777):
     logger.debug("Закрываем соект. Работа клиента завершена.")
 
 
+@log()
 def main():
     logger.debug("Запуск клиента")
     args = get_arguments()
