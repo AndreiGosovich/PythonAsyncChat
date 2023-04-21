@@ -1,16 +1,33 @@
 import argparse
 import calendar
+import inspect
 from socket import *
 import json
 from datetime import datetime, timezone
 import sys
 import logging
+from functools import wraps
 
 sys.path.append("../log")
 import server_log_config
+
 logger = logging.getLogger('chat.server')
 
 
+def log():
+    def decorator(func):
+        @wraps(func)
+        def decorated(*args, **kwargs):
+            logger.info(f' Функция {func.__name__} вызвана из функции {inspect.stack()[1].function}')
+            res = func(*args, **kwargs)
+            return res
+
+        return decorated
+
+    return decorator
+
+
+@log()
 def get_arguments():
     logger.debug('Получаем аргументы')
     parser = argparse.ArgumentParser()
@@ -21,6 +38,7 @@ def get_arguments():
     return args.addr, args.port
 
 
+@log()
 def get_socket(addr, port):
     logger.debug("Создаём сокет")
     s = socket(AF_INET, SOCK_STREAM)
@@ -29,6 +47,7 @@ def get_socket(addr, port):
     return s
 
 
+@log()
 def parse_client_data(data):
     logger.debug("Парсим сообщение от клиента")
     client_data = json.loads(data)
@@ -36,6 +55,7 @@ def parse_client_data(data):
     return client_data
 
 
+@log()
 def get_response(client_data):
     logger.debug("Формируем ответ клиенту")
     action = client_data['action']
@@ -48,14 +68,15 @@ def get_response(client_data):
         alert = 'Ok'
 
     response = {
-            "response": code,
-            "time": calendar.timegm(datetime.now(timezone.utc).utctimetuple()),
-            "alert": alert,
-        }
+        "response": code,
+        "time": calendar.timegm(datetime.now(timezone.utc).utctimetuple()),
+        "alert": alert,
+    }
 
     return json.dumps(response)
 
 
+@log()
 def run_chat_server(addr='', port=7777):
     logger.debug("Запускаем сервер")
     if not addr:
@@ -66,7 +87,7 @@ def run_chat_server(addr='', port=7777):
     s = get_socket(addr, port)
     logger.debug("Слушаем сокет")
     s.listen(5)
-    
+
     while True:
         client, addr = s.accept()
         data = client.recv(1000000).decode('utf-8')
@@ -83,6 +104,7 @@ def run_chat_server(addr='', port=7777):
         logger.debug("Закрываем соединение с клиентом")
 
 
+@log()
 def main():
     logger.debug("Запуск сервера")
     args = get_arguments()
