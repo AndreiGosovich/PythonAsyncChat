@@ -14,7 +14,7 @@ file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(formatter)
 
 stream_handler = logging.StreamHandler()
-stream_handler.setLevel(logging.DEBUG)
+stream_handler.setLevel(logging.CRITICAL)
 stream_handler.setFormatter(formatter)
 
 # Добавляем в логгер новый обработчик событий и устанавливаем уровень логирования
