@@ -1,5 +1,5 @@
 import unittest
-import client
+from Chat.Client import client
 import sys
 import json
 from datetime import datetime, timezone
