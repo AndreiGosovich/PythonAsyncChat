@@ -105,7 +105,7 @@ class ServerClient:
                     msg = json.dumps(messages_to_send[client])
                     sock.send(msg.encode('utf-8'))
                 except:  # Сокет недоступен, клиент отключился
-                    logger.info('Клиент {} {} отключился'.format(sock.fileno(), sock.getpeername()))
+                    # logger.info('Клиент {} {} отключился'.format(sock.fileno(), sock.getpeername()))
                     sock.close()
                     all_clients.remove(sock)
 
