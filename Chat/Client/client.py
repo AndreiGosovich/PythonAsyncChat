@@ -40,8 +40,12 @@ def get_arguments():
     if len(args) > 2:
         port = int(args[2])
 
-    logger.info(f'address = {addr}, port = {port}')
-    return addr, port
+    user_name = ''
+    if len(args) > 3:
+        user_name = args[3]
+
+    logger.info(f'address = {addr}, port = {port}, user_name = {user_name}')
+    return addr, port, user_name
 
 
 class MessangerClient:
@@ -184,7 +188,7 @@ def main():
     print("Запускаем клиент чата")
     args = get_arguments()
 
-    client = MessangerClient('')
+    client = MessangerClient(args[2])
     client.run_chat_client(args[0], args[1])
 
 
