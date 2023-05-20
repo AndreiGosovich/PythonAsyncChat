@@ -1,5 +1,6 @@
 import argparse
 import calendar
+import dis
 import inspect
 import select
 from socket import *
@@ -26,6 +27,19 @@ def log():
     return decorator
 
 
+# Дескриптор для описания порта:
+class Port:
+    def __set__(self, instance, value):
+        if not 1023 < value < 65536:
+            error_string = f'Указан неверный порт {value}. Порт должен быть в диапазоне с 1024 до 65535.'
+            logger.critical(error_string)
+            exit(1)
+        instance.__dict__[self.name] = value
+
+    def __set_name__(self, owner, name):
+        self.name = name
+
+
 @log()
 def get_arguments():
     logger.debug('Получаем аргументы')
@@ -37,8 +51,42 @@ def get_arguments():
     return args.addr, args.port
 
 
-class ServerClient:
-    @log()
+class ServerVerifier(type):
+
+    def __init__(self, clsname, bases, clsdict):
+        for key, value in clsdict.items():
+            # print(key, value)
+
+            # Проверка отсутствия объявления сокета на уровне класса
+            if isinstance(value, socket):
+                raise ValueError('Нельзя использовать Socket на уровне класса')
+
+            # Проверка отсутствия connect для сокетов
+            bad_methods = ['connect']
+            if hasattr(value, "__call__"):  # Пропустить любые невызываемые объекты
+                for instructions in dis.get_instructions(value):  # перебрать все инструкции
+                    if instructions.opname == 'LOAD_METHOD' and instructions.argval in bad_methods:  # Проверить наличие вызова плохих методов
+                        raise TypeError('Запрещено использовать методы accept и listen для сокетов')
+
+            # Запретить использование других сокетов для работы, кроме TCP
+            arg_vals = []
+            if hasattr(value, "__call__"):  # Пропустить любые невызываемые объекты
+                for instructions in dis.get_instructions(value):  # перебрать все инструкции
+                    if instructions.opname == 'LOAD_GLOBAL':
+                        arg_vals.append(instructions.argval)  # Собрать все все глобальные переменнные
+                if ('AF_INET' in arg_vals or 'AF_INET6' in arg_vals) and 'SOCK_STREAM' not in arg_vals:  # Если используется TCP, то обязательно должно быть SOCK_STREAM
+                    raise TypeError('Для сокетов необходимо использовать только TCP (SOCK_STREAM)')
+
+        type.__init__(self, clsname, bases, clsdict)
+
+
+class ServerClient(metaclass=ServerVerifier):
+    port = Port()
+
+    def __init__(self):
+        self.addr = ''
+
+    # @log()
     def get_socket(self, addr, port):
         logger.debug("Создаём сокет")
         s = socket(AF_INET, SOCK_STREAM)
@@ -48,14 +96,14 @@ class ServerClient:
 
         return s
 
-    @log()
+    # @log()
     def parse_client_data(self, data):
         logger.debug("Парсим сообщение от клиента")
         client_data = json.loads(data)
 
         return client_data
 
-    @log()
+    # @log()
     def get_response(self, client_data):
         logger.debug("Формируем ответ клиенту")
         action = client_data['action']
@@ -80,7 +128,7 @@ class ServerClient:
         }
         return json.dumps(response), message_to_send
 
-    @log()
+    # @log()
     def write_responses(self, requests, w_clients, all_clients):
         """ Эхо-ответ сервера клиентам, от которых были запросы
         """
@@ -95,7 +143,7 @@ class ServerClient:
                     sock.close()
                     all_clients.remove(sock)
 
-    @log()
+    # @log()
     def send_messages(self, w_clients, all_clients, messages_to_send):
         """ Текстовое сообщение всем подключенным клиентам
         """
@@ -127,18 +175,16 @@ class ServerClient:
                 all_clients.remove(sock)
         return responses, messages
 
-    @log()
+    # @log()
     def run_chat_server(self, addr='', port=7777):
+        self.port = port if port else 7777
+        self.addr = addr if addr else ''
         # logger.info("Запускаем сервер")
-        if not addr:
-            addr = ''
-        if not port:
-            port = 7777
 
         clients = []
         messages_to_send = {}
 
-        s = self.get_socket(addr, port)
+        s = self.get_socket(self.addr, self.port)
         logger.info("Сервер запущен")
         while True:
             try:
