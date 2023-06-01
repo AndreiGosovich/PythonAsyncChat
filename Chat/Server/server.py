@@ -3,12 +3,19 @@ import calendar
 import dis
 import inspect
 import select
+import threading
+import time
 from socket import *
 import json
 from datetime import datetime, timezone
 import sys
 import logging
 from functools import wraps
+
+from PyQt6 import QtWidgets
+
+from server_database import ServerDatabaseStorage
+from gui_server import ServerWindow
 
 sys.path.append("..")
 from log import server_log_config
@@ -80,11 +87,14 @@ class ServerVerifier(type):
         type.__init__(self, clsname, bases, clsdict)
 
 
-class ServerClient(metaclass=ServerVerifier):
+class ServerClient(threading.Thread, metaclass=ServerVerifier):
     port = Port()
 
-    def __init__(self):
-        self.addr = ''
+    def __init__(self, addr, port):
+        self.addr = addr or ''
+        self.port = port or 7777
+        self.database = ServerDatabaseStorage('sqlite:///server_database.sqlite3', False)
+        super().__init__()
 
     # @log()
     def get_socket(self, addr, port):
@@ -100,7 +110,6 @@ class ServerClient(metaclass=ServerVerifier):
     def parse_client_data(self, data):
         logger.debug("Парсим сообщение от клиента")
         client_data = json.loads(data)
-
         return client_data
 
     # @log()
@@ -114,19 +123,37 @@ class ServerClient(metaclass=ServerVerifier):
         message_to_send = {}
 
         if action == 'presence':
-            code = 200
+            print(type(client_data), client_data)
+            # Проверить, что пользователь есть в списке, если нет - добавить
+            if not self.database.get_user(client_data['user']['account_name']):
+                user = self.database.add_user(client_data['user']['account_name'])
+                code = 201
+            else:
+                code = 200
             alert = 'Ok'
         elif action == 'msg':
             code = 200
             alert = 'Ok'
             message_to_send = client_data
+        elif action == 'get_contacts':
+            code = 202
+            alert = self.database.get_contacts(client_data['user_login'])
+        elif action == 'add_contact':
+            self.database.add_contact(client_data['user_id'], client_data['user_login'])
+            code = 202
+            alert = "Ok"
+        elif action == 'del_contact':
+            self.database.remove_contact(client_data['user_id'], client_data['user_login'])
+            code = 202
+            alert = "Ok"
 
         response = {
             "response": code,
             "time": calendar.timegm(datetime.now(timezone.utc).utctimetuple()),
             "alert": alert,
         }
-        return json.dumps(response), message_to_send
+
+        return (json.dumps(response) if len(message_to_send) == 0 else ''), message_to_send
 
     # @log()
     def write_responses(self, requests, w_clients, all_clients):
@@ -148,12 +175,18 @@ class ServerClient(metaclass=ServerVerifier):
         """ Текстовое сообщение всем подключенным клиентам
         """
         for client in messages_to_send:
+            # Сохранить в историю сообщений на сервере
+            self.database.save_messge_to_history(messages_to_send[client]['from'],
+                                                 messages_to_send[client]['to'],
+                                                 messages_to_send[client]['message'])
             for sock in w_clients:
                 try:
                     msg = json.dumps(messages_to_send[client])
                     sock.send(msg.encode('utf-8'))
-                except:  # Сокет недоступен, клиент отключился
+
+                except TypeError as e:  # Сокет недоступен, клиент отключился
                     # logger.info('Клиент {} {} отключился'.format(sock.fileno(), sock.getpeername()))
+                    print(e)
                     sock.close()
                     all_clients.remove(sock)
 
@@ -170,15 +203,16 @@ class ServerClient(metaclass=ServerVerifier):
                 if len(message):
                     messages[sock] = message
                 logger.info(f'Получено сообщение: {data} от Клиента: {sock.fileno()} {sock.getpeername()}')
-            except:
+            except Exception as e:
+                print(e)
                 logger.info('Клиент {} {} отключился'.format(sock.fileno(), sock.getpeername()))
                 all_clients.remove(sock)
         return responses, messages
 
     # @log()
-    def run_chat_server(self, addr='', port=7777):
-        self.port = port if port else 7777
-        self.addr = addr if addr else ''
+    def run(self):
+        # self.port = port if port else 7777
+        # self.addr = addr if addr else ''
         # logger.info("Запускаем сервер")
 
         clients = []
@@ -217,10 +251,41 @@ class ServerClient(metaclass=ServerVerifier):
 @log()
 def main():
     logger.info("Запуск сервера")
+
+    # database = ServerDatabaseStorage('sqlite:///server_database.sqlite3', True)
+    # print(*database.session.query(database.Users).filter().all())
+
     args = get_arguments()
 
-    server_client = ServerClient()
-    server_client.run_chat_server(args[0], args[1])
+    server_client = ServerClient(args[0], args[1])
+    server_client.daemon = True
+    server_client.start()
+    # server_client.run_chat_server(args[0], args[1])
+
+    # while server_client.is_alive():
+    #     time.sleep(1)
+
+    server_window_app = QtWidgets.QApplication(sys.argv)
+    main_window = ServerWindow()
+
+    def update_user_list():
+        main_window.tblUsers.setModel(main_window.create_users_list_view(server_client.database))
+        main_window.tblUsers.resizeColumnsToContents()
+        main_window.tblUsers.resizeRowsToContents()
+
+    update_user_list()
+    main_window.btnContacts.clicked.connect(update_user_list)
+
+    def update_messages_history():
+        main_window.lstMessages.setModel(main_window.create_messages_history_view(server_client.database, 20))
+        # main_window.lstMessages.resizeColumnsToContents()
+        # main_window.lstMessages.resizeRowsToContents()
+
+    update_messages_history()
+    main_window.btnMessages.clicked.connect(update_messages_history)
+
+    main_window.show()
+    sys.exit(server_window_app.exec())
 
 
 if __name__ == '__main__':
