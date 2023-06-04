@@ -13,6 +13,7 @@ import logging
 from functools import wraps
 
 from PyQt6 import QtWidgets
+from PyQt6.QtCore import QTimer
 
 from server_database import ServerDatabaseStorage
 from gui_server import ServerWindow
@@ -37,7 +38,7 @@ def log():
 # Дескриптор для описания порта:
 class Port:
     def __set__(self, instance, value):
-        if not 1023 < value < 65536:
+        if not 1023 < int(value) < 65536:
             error_string = f'Указан неверный порт {value}. Порт должен быть в диапазоне с 1024 до 65535.'
             logger.critical(error_string)
             exit(1)
@@ -62,7 +63,6 @@ class ServerVerifier(type):
 
     def __init__(self, clsname, bases, clsdict):
         for key, value in clsdict.items():
-            # print(key, value)
 
             # Проверка отсутствия объявления сокета на уровне класса
             if isinstance(value, socket):
@@ -93,14 +93,19 @@ class ServerClient(threading.Thread, metaclass=ServerVerifier):
     def __init__(self, addr, port):
         self.addr = addr or ''
         self.port = port or 7777
-        self.database = ServerDatabaseStorage('sqlite:///server_database.sqlite3', False)
+        self.database = None  #
+        self.server_is_active = False
+        self.socket = None
         super().__init__()
+
+    def set_database(self, connection_string, echo=False):
+        self.database = ServerDatabaseStorage(connection_string, echo)
 
     # @log()
     def get_socket(self, addr, port):
         logger.debug("Создаём сокет")
         s = socket(AF_INET, SOCK_STREAM)
-        s.bind((addr, port))
+        s.bind((addr, int(port)))
         s.listen(5)
         s.settimeout(0.2)  # Таймаут для операций с сокетом
 
@@ -211,18 +216,17 @@ class ServerClient(threading.Thread, metaclass=ServerVerifier):
 
     # @log()
     def run(self):
-        # self.port = port if port else 7777
-        # self.addr = addr if addr else ''
-        # logger.info("Запускаем сервер")
-
         clients = []
         messages_to_send = {}
 
-        s = self.get_socket(self.addr, self.port)
+        if not self.socket:
+            self.socket = self.get_socket(self.addr, self.port)
+        self.server_is_active = True
+
         logger.info("Сервер запущен")
-        while True:
+        while self.server_is_active:
             try:
-                client, addr = s.accept()
+                client, addr = self.socket.accept()
             except OSError as e:
                 pass  # timeout вышел
             else:
@@ -252,37 +256,58 @@ class ServerClient(threading.Thread, metaclass=ServerVerifier):
 def main():
     logger.info("Запуск сервера")
 
-    # database = ServerDatabaseStorage('sqlite:///server_database.sqlite3', True)
-    # print(*database.session.query(database.Users).filter().all())
-
     args = get_arguments()
-
-    server_client = ServerClient(args[0], args[1])
-    server_client.daemon = True
-    server_client.start()
-    # server_client.run_chat_server(args[0], args[1])
-
-    # while server_client.is_alive():
-    #     time.sleep(1)
 
     server_window_app = QtWidgets.QApplication(sys.argv)
     main_window = ServerWindow()
 
+    server_client = ServerClient(main_window.edtAddress.text(), main_window.edtPort.text())
+    server_client.set_database(main_window.edtConnectionString.text(), False)
+
+    def connect():
+        server_client.set_database(main_window.edtConnectionString.text(), False)
+        server_client.addr = main_window.edtAddress.text()
+        server_client.port = main_window.edtPort.text()
+        if not server_client.server_is_active:
+            server_client.daemon = True
+            server_client.start()
+
+        for _ in range(0, 30):
+            if server_client.server_is_active:
+                break
+            time.sleep(0.5)
+
+        if not server_client.server_is_active:
+            raise ConnectionError('Не удалось выполнить подключение за указанное время.')
+
+        main_window.database = server_client.database
+        update_user_list()
+        update_messages_history()
+
+    main_window.btnConnect.clicked.connect(connect)
+
     def update_user_list():
-        main_window.tblUsers.setModel(main_window.create_users_list_view(server_client.database))
+        main_window.tblUsers.setModel(main_window.create_users_list_view())
         main_window.tblUsers.resizeColumnsToContents()
         main_window.tblUsers.resizeRowsToContents()
+        # print(1)
 
     update_user_list()
     main_window.btnContacts.clicked.connect(update_user_list)
 
     def update_messages_history():
         main_window.lstMessages.setModel(main_window.create_messages_history_view(server_client.database, 20))
-        # main_window.lstMessages.resizeColumnsToContents()
-        # main_window.lstMessages.resizeRowsToContents()
 
     update_messages_history()
     main_window.btnMessages.clicked.connect(update_messages_history)
+
+    timer_update_user_list = QTimer()
+    timer_update_user_list.timeout.connect(update_user_list)
+    timer_update_user_list.start(1000)
+
+    timer_update_messages_history = QTimer()
+    timer_update_messages_history.timeout.connect(update_messages_history)
+    timer_update_messages_history.start(1000)
 
     main_window.show()
     sys.exit(server_window_app.exec())

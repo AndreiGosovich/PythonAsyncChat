@@ -10,9 +10,13 @@ import time
 from datetime import datetime, timezone
 from socket import *
 from functools import wraps
-from select import select
-from threading import Thread, Lock
+from threading import Thread
+
+
 from client_database import ClientDatabaseStorage
+
+from PyQt6 import QtWidgets
+from gui_client import ClientWindow, ChatDialogWindow, AddContactDialogWindow, DelContactDialogWindow
 
 sys.path.append("..")
 from log import client_log_config
@@ -37,7 +41,8 @@ def get_arguments():
     if len(args) > 1:
         addr = args[1]
     else:
-        raise SystemExit('Invalid address')
+        # raise SystemExit('Invalid address')
+        addr = ""
 
     port = 0
     if len(args) > 2:
@@ -82,11 +87,15 @@ class ClientVerifier(type):
 
 class MessangerClient(Thread, metaclass=ClientVerifier):
 
-    def __init__(self, user_name):
+    def __init__(self, user_name,  addr='localhost', port=7777):
         self.user_name = user_name
+        self.addr = addr
+        self.port = port
+        self.socket = None  # self.get_socket(AF_INET, SOCK_STREAM)
         self.cv = threading.Condition()
         self.database = ClientDatabaseStorage('sqlite:///client_database.sqlite3', False)
         self.lock = threading.Lock()
+        self.client_is_active = False
         super().__init__()
 
     # @log
@@ -156,16 +165,18 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
     def get_socket(self, addr_family, socket_type):
         logger.debug("Создаём сокет")
         s = socket(addr_family, socket_type)  # Создать сокет TCP
+        s.connect((self.addr, self.port))  # Соединиться с сервером
+        s.settimeout(1)
 
         return s
 
     # @log
-    def receiver(self, s):
-        while True:
+    def receiver(self):
+        while self.client_is_active:
             time.sleep(1)
             with self.lock:
                 try:
-                    data = s.recv(1000000).decode('utf-8')
+                    data = self.socket.recv(1000000).decode('utf-8')
 
                     if data:
                         logger.debug(f'Сообщение от сервера: {data}, длиной {len(data)} байт')
@@ -174,52 +185,56 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
                             print(f'\n{server_response}\n>', end='')
                     else:
                         logger.critical("Server close connection")
-                        s.close()
+                        self.socket.close()
                         break
                 except OSError as err:
                     if err.errno:
                         logger.critical('Lost server connection')
-                        s.close()
+                        self.socket.close()
                         break
 
+    def send_message(self, to_user, msg):
+        msg = msg.strip()
+        with self.lock:
+            self.database.save_message_to_history(self.user_name, to_user, msg)
+            msg = self.create_text_message(to_user, msg)
+            self.socket.send(msg.encode('utf-8'))  # Отправить!
+
     # @log
-    def sender(self, s):
+    def sender(self):
         logger.debug('Чат запущен.')
 
         self.show_help()
 
-        while True:
+        while self.client_is_active:
             msg = input('>')
             if msg == 'exit':
-                break
+                # break
+                self.client_is_active = False
             elif msg == 'help':
                 self.show_help()
             elif msg == 'contacts':
-                self.contacts_manager(s)
+                self.contacts_manager()
             elif msg == 'm':
                 self.show_messages_history(self.user_name, input('Введите ник пользователя: '))
             else:
-                with self.lock:
-                    try:
-                        to_user, msg = msg.split(',')
-                        msg = msg.strip()
-                        self.database.save_message_to_history(self.user_name, to_user, msg)
-                        msg = self.create_text_message(to_user, msg)
-                        s.send(msg.encode('utf-8'))  # Отправить!
-                    except OSError:
-                        logger.critical('Соединение с сервером разорвано. Перезапустите клиент.')
-                        s.close()
-                        break
-                    except ValueError:
-                        print('Неправильный формат сообщения!')
-                        self.show_help()
+                to_user, msg = msg.split(',')
+                try:
+                    self.send_message(to_user, msg)
+                except OSError:
+                    logger.critical('Соединение с сервером разорвано. Перезапустите клиент.')
+                    self.socket.close()
+                    break
+                except ValueError:
+                    print('Неправильный формат сообщения!')
+                    self.show_help()
 
     # @log
-    def ask_user_name(self):
-        user_name = ''
-        while not user_name:
-            user_name = input('Укажите имя пользователя: ')
-        self.user_name = user_name
+    # def ask_user_name(self):
+    #     user_name = ''
+    #     while not user_name:
+    #         user_name = input('Укажите имя пользователя: ')
+    #     self.user_name = user_name
 
     # @log
     def show_help(self):
@@ -230,37 +245,37 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
         print('     m: историю сообщений с контактом')
         print('     <имя получателя>, <сообщение>: отправить сообщение указанному пользователю (ALL - всем)')
 
-    def send_presense(self, s, status):
+    def send_presense(self, status):
         msg = self.create_presence_message(status)
         logger.debug("Отправляем Presense сообщение серверу")
 
         with self.lock:
-            s.send(msg.encode('utf-8'))
-            data = s.recv(1000000).decode('utf-8')
+            self.socket.send(msg.encode('utf-8'))
+            data = self.socket.recv(1000000).decode('utf-8')
 
         if data:
             logger.debug(f'Сообщение от сервера: {data}, длиной {len(data)} байт')
 
-    def contacts_manager(self, s):
+    def contacts_manager(self):
         print('Выберите действие')
         print('     list:   вывести список контактов')
         print('     add:    добавить контакт')
         print('     del: удалить контакт')
         action = input('>')
         if action == 'list':
-            self.show_contacts(s)
+            self.show_contacts()
         elif action == 'add':
-            self.add_or_del_contact(s, input('Введите ник пользователя: '), action)
+            self.add_or_del_contact(self.socket, input('Введите ник пользователя: '), action)
         elif action == 'del':
-            self.add_or_del_contact(s, input('Введите ник пользователя: '), action)
+            self.add_or_del_contact(self.socket, input('Введите ник пользователя: '), action)
 
-    def get_contacts(self, s):
+    def get_contacts(self):
         msg = self.create_get_contacts_message()
         logger.debug("Отправляем Запрос списка контактов")
 
         with self.lock:
-            s.send(msg.encode('utf-8'))
-            data = s.recv(1000000).decode('utf-8')
+            self.socket.send(msg.encode('utf-8'))
+            data = self.socket.recv(1000000).decode('utf-8')
 
             if data:
                 logger.debug(f'Сообщение от сервера: {data}, длиной {len(data)} байт')
@@ -270,12 +285,12 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
                     for contact in server_response['alert']:
                         self.database.add_contact(self.user_name, contact)
 
-    def show_contacts(self, s):
+    def show_contacts(self):
         contact_list = self.database.get_contacts(self.user_name)
         for c in contact_list:
             print(c)
 
-    def add_or_del_contact(self, s, contact, action):
+    def add_or_del_contact(self, contact, action):
         if action == 'add':
             msg = self.create_add_contacts_message(contact)
             logger.debug("Отправляем Запрос добавления контакта")
@@ -286,64 +301,146 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
             return
 
         with self.lock:
-            s.send(msg.encode('utf-8'))
+            self.socket.send(msg.encode('utf-8'))
 
-            data = s.recv(1000000).decode('utf-8')
+            data = self.socket.recv(1000000).decode('utf-8')
 
             if data:
                 logger.debug(f'Сообщение от сервера: {data}, длиной {len(data)} байт')
                 server_response = json.loads(data)
         if server_response and server_response['response'] and server_response['response'] in range(200, 300):
-            self.get_contacts(s)
+            self.get_contacts()
 
     def show_messages_history(self, user_from, user_to):
         messages = self.database.get_message_history(user_from, user_to)
-        #     [m.user_from, m.user_to, m.message, m.time_send]
         for m in messages:
             print(f'({m[3]}) {m[0]}: {m[2]}')
 
     # @log
-    def run_chat_client(self, addr='', port=7777):
+    def run(self):
         logger.debug("Подключаемся...")
-        if not addr:
-            addr = ''
-        if not port:
-            port = 7777
 
-        if not self.user_name:
-            self.ask_user_name()
 
-        with self.get_socket(AF_INET, SOCK_STREAM) as s:
-            s.connect((addr, port))  # Соединиться с сервером
+        if not self.socket:
+            self.socket = self.get_socket(AF_INET, SOCK_STREAM)
 
-            s.settimeout(1)
+        self.client_is_active = True
 
-            self.send_presense(s, 'online')
-            self.get_contacts(s)  # Получить список контактов
+        logger.debug("Запускаем потоки...")
+        receiver_thread = Thread(target=self.receiver)
+        receiver_thread.daemon = True
+        receiver_thread.start()
 
-            logger.debug("Запускаем потоки...")
-            receiver_thread = Thread(target=self.receiver, args=(s,))
-            receiver_thread.daemon = True
-            receiver_thread.start()
+        sender_thread = Thread(target=self.sender)
+        sender_thread.daemon = True
+        sender_thread.start()
+        # sender_thread.join()
+        #
+        while self.client_is_active:
+            if not receiver_thread.is_alive() or not sender_thread.is_alive():
+                break
+            time.sleep(1)
 
-            sender_thread = Thread(target=self.sender, args=(s,))
-            sender_thread.daemon = True
-            sender_thread.start()
-            # sender_thread.join()
-            #
-            while True:
-                if not receiver_thread.is_alive() or not sender_thread.is_alive():
-                    break
-                time.sleep(5)
+
+def ask_user_name():
+    user_name = ''
+    while not user_name:
+        user_name = input('Укажите имя пользователя: ')
+    return user_name
+
 
 @log
 def main():
     logger.debug("Запускаем клиент чата")
     print("Запускаем клиент чата")
     args = get_arguments()
+    user_nane = args[2]
 
-    client = MessangerClient(args[2])
-    client.run_chat_client(args[0], args[1])
+    client_window_app = QtWidgets.QApplication(sys.argv)
+    main_window = ClientWindow()
+    client = MessangerClient(main_window.edtUserName.text())
+
+    def connect():
+        client.user_name = main_window.edtUserName.text()
+        if not client.client_is_active:
+            client.daemon = True
+            client.start()
+
+        for _ in range(0, 30):
+            if client.client_is_active:
+                break
+            time.sleep(0.5)
+
+        if not client.client_is_active:
+            raise ConnectionError('Не удалось выполнить подключение за указанное время.')
+
+        client.send_presense('online')
+
+        main_window.database = client.database
+        main_window.username = main_window.edtUserName.text()
+        main_window.addr = main_window.edtAddres.text()
+        main_window.port = main_window.edtPort.text()
+        update_contact_list()
+
+    main_window.btnConnect.clicked.connect(connect)
+
+    def update_contact_list():
+        if client.client_is_active:
+            client.get_contacts()
+            main_window.lstContacts.setModel(main_window.get_contacts_view())
+
+    update_contact_list()
+
+    def messages_window():
+        user_to = main_window.lstContacts.currentIndex().data()
+        if user_to:
+            dialog = ChatDialogWindow(user_to, main_window)
+
+            def update_messages():
+                dialog.lstMessges.setModel(dialog.create_messages_history_view(user_to))
+
+            update_messages()
+
+            def send_message_btn_action():
+                if dialog.txtMessage.toPlainText():
+                    client.send_message(user_to, dialog.txtMessage.toPlainText())
+                    dialog.txtMessage.clear()
+                    update_messages()
+
+            dialog.btnSend.clicked.connect(send_message_btn_action)
+            dialog.btnRefresh.clicked.connect(update_messages)
+
+            dialog.open()
+
+    main_window.lstContacts.doubleClicked.connect(messages_window)
+
+    def add_contact_window():
+        def add_contact(contact):
+            if contact:
+                client.add_or_del_contact(contact, 'add')
+                update_contact_list()
+
+        dialog = AddContactDialogWindow(main_window)
+        dialog.accepted.connect(lambda: add_contact(dialog.edtUserName.text()))
+        dialog.open()
+
+    main_window.btnAddContact.clicked.connect(add_contact_window)
+
+    def dell_contact_window():
+        contact = main_window.lstContacts.currentIndex().data()
+        def del_contact(contact):
+            if contact:
+                client.add_or_del_contact(contact, 'del')
+                update_contact_list()
+
+        dialog = DelContactDialogWindow(contact, main_window)
+        dialog.accepted.connect(lambda: del_contact(dialog.edtUserName.toPlainText()))
+        dialog.open()
+
+    main_window.btnDelContact.clicked.connect(dell_contact_window)
+
+    main_window.show()
+    sys.exit(client_window_app.exec())
 
 
 if __name__ == '__main__':

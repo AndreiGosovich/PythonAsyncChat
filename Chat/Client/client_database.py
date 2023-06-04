@@ -34,7 +34,7 @@ class ClientDatabaseStorage:
             self.time_send = time_send
 
     def __init__(self, connection_string, enable_echo=False):
-        self.db_engine = create_engine(connection_string, echo=enable_echo)
+        self.db_engine = create_engine(connection_string, echo=enable_echo, connect_args={'check_same_thread': False})
         self.metadata = MetaData()
         self.map_tables()
         self.session = sessionmaker(bind=self.db_engine)()

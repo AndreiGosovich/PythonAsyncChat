@@ -1,88 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>ClientMainWindow</class>
+ <widget class="QMainWindow" name="ClientMainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>400</width>
     <height>600</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>800</width>
+    <width>400</width>
     <height>600</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>800</width>
+    <width>739</width>
     <height>600</height>
    </size>
   </property>
   <property name="windowTitle">
-   <string>Chat server config</string>
+   <string>Chat client</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>4</y>
-      <width>781</width>
-      <height>91</height>
+      <y>10</y>
+      <width>381</width>
+      <height>121</height>
      </rect>
     </property>
     <property name="title">
-     <string>Настройка сервера</string>
+     <string>Настройки подключения</string>
     </property>
-    <widget class="QLineEdit" name="edtConnectionString">
-     <property name="geometry">
-      <rect>
-       <x>210</x>
-       <y>30</y>
-       <width>561</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>sqlite:///server_database.sqlite3</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="label">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>20</x>
        <y>30</y>
-       <width>191</width>
+       <width>91</width>
        <height>21</height>
       </rect>
      </property>
      <property name="text">
-      <string>Строка подключения к базе:</string>
+      <string>Пользователь</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="edtUserName">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>30</y>
+       <width>221</width>
+       <height>22</height>
+      </rect>
      </property>
     </widget>
     <widget class="QLabel" name="label_2">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>20</x>
        <y>60</y>
-       <width>181</width>
+       <width>101</width>
        <height>21</height>
       </rect>
      </property>
      <property name="text">
-      <string>Адрес</string>
+      <string>Адрес сервера</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_3">
      <property name="geometry">
       <rect>
-       <x>510</x>
-       <y>60</y>
-       <width>41</width>
+       <x>20</x>
+       <y>90</y>
+       <width>91</width>
        <height>21</height>
       </rect>
      </property>
@@ -90,30 +87,30 @@
       <string>Порт</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="edtAddress">
+    <widget class="QLineEdit" name="edtAddres">
      <property name="geometry">
       <rect>
-       <x>210</x>
+       <x>150</x>
        <y>60</y>
-       <width>291</width>
+       <width>221</width>
        <height>22</height>
       </rect>
      </property>
      <property name="text">
-      <string>localhost</string>
+      <string/>
      </property>
     </widget>
     <widget class="QLineEdit" name="edtPort">
      <property name="geometry">
       <rect>
-       <x>550</x>
-       <y>60</y>
-       <width>101</width>
+       <x>150</x>
+       <y>90</y>
+       <width>111</width>
        <height>22</height>
       </rect>
      </property>
      <property name="text">
-      <string>7777</string>
+      <string/>
      </property>
     </widget>
     <widget class="QPushButton" name="btnConnect">
@@ -122,8 +119,8 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>680</x>
-       <y>60</y>
+       <x>280</x>
+       <y>90</y>
        <width>80</width>
        <height>22</height>
       </rect>
@@ -139,98 +136,63 @@
      </property>
     </widget>
    </widget>
-   <widget class="QPushButton" name="btnExit">
-    <property name="geometry">
-     <rect>
-      <x>280</x>
-      <y>550</y>
-      <width>221</width>
-      <height>22</height>
-     </rect>
+   <widget class="QListView" name="lstContacts">
+    <property name="enabled">
+     <bool>true</bool>
     </property>
-    <property name="text">
-     <string>Остановить сервер и выйти</string>
-    </property>
-   </widget>
-   <widget class="QTableView" name="tblUsers">
-    <property name="geometry">
-     <rect>
-      <x>530</x>
-      <y>120</y>
-      <width>261</width>
-      <height>421</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>540</x>
-      <y>100</y>
-      <width>231</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Список всех пользователей</string>
-    </property>
-   </widget>
-   <widget class="QListView" name="lstMessages">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>120</y>
-      <width>501</width>
-      <height>421</height>
+      <y>141</y>
+      <width>381</width>
+      <height>391</height>
      </rect>
     </property>
-   </widget>
-   <widget class="QLabel" name="label_5">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>100</y>
-      <width>231</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Последние сообщения</string>
+    <property name="editTriggers">
+     <set>QAbstractItemView::NoEditTriggers</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnContacts">
+   <widget class="QPushButton" name="btnExit">
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>550</y>
-      <width>241</width>
+      <x>310</x>
+      <y>540</y>
+      <width>81</width>
       <height>22</height>
      </rect>
     </property>
     <property name="text">
-     <string>Обновить список пользователей</string>
+     <string>Выход</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnMessages">
+   <widget class="QPushButton" name="btnAddContact">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>550</y>
-      <width>241</width>
+      <x>10</x>
+      <y>540</y>
+      <width>141</width>
       <height>22</height>
      </rect>
     </property>
     <property name="text">
-     <string>Обновить историю сообщений</string>
+     <string>Добавить контакт</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnDelContact">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>540</y>
+      <width>141</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Удалить контакт</string>
     </property>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="menuExit">
-   <property name="text">
-    <string>Выход</string>
-   </property>
-  </action>
  </widget>
  <resources/>
  <connections/>
