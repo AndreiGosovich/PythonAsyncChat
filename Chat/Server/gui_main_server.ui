@@ -201,14 +201,14 @@
    <widget class="QPushButton" name="btnContacts">
     <property name="geometry">
      <rect>
-      <x>540</x>
+      <x>560</x>
       <y>550</y>
-      <width>241</width>
+      <width>91</width>
       <height>22</height>
      </rect>
     </property>
     <property name="text">
-     <string>Обновить список пользователей</string>
+     <string>Обновить</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnMessages">
@@ -222,6 +222,19 @@
     </property>
     <property name="text">
      <string>Обновить историю сообщений</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnAddUser">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>550</y>
+      <width>91</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Добавить</string>
     </property>
    </widget>
   </widget>

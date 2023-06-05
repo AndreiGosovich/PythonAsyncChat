@@ -10,10 +10,12 @@ class ServerDatabaseStorage:
         __tablename__ = 'users'
         id = Column(Integer, primary_key=True)
         name = Column(String)
+        password_hash = Column(String)
         information = Column(String)
 
-        def __init__(self, name, information=''):
+        def __init__(self, name, password_hash, information=''):
             self.name = name
+            self.password_hash = password_hash
             self.information = information
 
         def __repr__(self):
@@ -73,6 +75,7 @@ class ServerDatabaseStorage:
         users_table = Table('users', self.metadata,
                             Column('id', Integer, primary_key=True),
                             Column('name', String),
+                            Column('password_hash', String),
                             Column('information', String),
                             )
 
@@ -103,10 +106,10 @@ class ServerDatabaseStorage:
     def get_time():
         return datetime.now()  # calendar.timegm(datetime.now(timezone.utc).utctimetuple())
 
-    def add_user(self, user_name, information=''):
+    def add_user(self, user_name, password_hash, information=''):
         user = self.session.query(self.Users).filter_by(name=user_name).first()
         if not user:
-            user = ServerDatabaseStorage.Users(user_name, information)
+            user = ServerDatabaseStorage.Users(user_name, password_hash, information)
             self.session.add(user)
             self.session.commit()
         return user
@@ -171,11 +174,16 @@ class ServerDatabaseStorage:
             ])
         return messages
 
+    def get_user_and_password(self, user_name, password_hash):
+        result = self.session.query(self.Users).filter_by(name=user_name, password_hash=password_hash).first()
+        print(result)
+        return result
+
 
 if __name__ == "__main__":
     username = 'Andrei'
     database = ServerDatabaseStorage('sqlite:///server_database.sqlite3', True)
-    user_1 = database.add_user(username)
+    user_1 = database.add_user(username, '123')
 
     print(user_1)
     print(*database.get_all_users())

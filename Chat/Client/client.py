@@ -87,8 +87,9 @@ class ClientVerifier(type):
 
 class MessangerClient(Thread, metaclass=ClientVerifier):
 
-    def __init__(self, user_name,  addr='localhost', port=7777):
+    def __init__(self, user_name, password, addr='localhost', port=7777):
         self.user_name = user_name
+        self.password = password
         self.addr = addr
         self.port = port
         self.socket = None  # self.get_socket(AF_INET, SOCK_STREAM)
@@ -96,6 +97,7 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
         self.database = ClientDatabaseStorage('sqlite:///client_database.sqlite3', False)
         self.lock = threading.Lock()
         self.client_is_active = False
+        self.is_authenticate = False
         super().__init__()
 
     # @log
@@ -108,6 +110,18 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
             "user": {
                 "account_name": self.user_name,
                 "status": status,
+            }
+        })
+
+    def create_authenticate_message(self):
+        logger.debug("Создаём authenticate сообщение серверу")
+
+        return json.dumps({
+            "action": "authenticate",
+            "time": calendar.timegm(datetime.now(timezone.utc).utctimetuple()),
+            "user": {
+                "account_name": self.user_name,
+                "password": self.password,
             }
         })
 
@@ -316,6 +330,25 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
         for m in messages:
             print(f'({m[3]}) {m[0]}: {m[2]}')
 
+    def authenticate(self):
+        """Аутентификация пользователя на сервере. True, если авторизация успешна."""
+        msg = self.create_authenticate_message()
+        logger.debug("Отправляем Запрос аутентификации")
+
+        with self.lock:
+            self.socket.send(msg.encode('utf-8'))
+            data = self.socket.recv(1000000).decode('utf-8')
+
+            if data:
+                logger.debug(f'Сообщение от сервера: {data}, длиной {len(data)} байт')
+                server_response = json.loads(data)
+                if server_response and 'response' in server_response and server_response and 'alert' in server_response:
+                    if server_response['response'] == 200:
+                        return True
+                    logger.critical(f'Ошибка авторизации на сервере. '
+                                    f'Код {server_response["response"]}, описание: {server_response["alert"]}')
+        return False
+
     # @log
     def run(self):
         logger.debug("Подключаемся...")
@@ -358,10 +391,11 @@ def main():
 
     client_window_app = QtWidgets.QApplication(sys.argv)
     main_window = ClientWindow()
-    client = MessangerClient(main_window.edtUserName.text())
+    client = MessangerClient(main_window.edtUserName.text(), main_window.adtPassword.text())
 
     def connect():
         client.user_name = main_window.edtUserName.text()
+        client.password = main_window.adtPassword.text()
         if not client.client_is_active:
             client.daemon = True
             client.start()
@@ -374,18 +408,21 @@ def main():
         if not client.client_is_active:
             raise ConnectionError('Не удалось выполнить подключение за указанное время.')
 
-        client.send_presense('online')
-
-        main_window.database = client.database
-        main_window.username = main_window.edtUserName.text()
-        main_window.addr = main_window.edtAddres.text()
-        main_window.port = main_window.edtPort.text()
-        update_contact_list()
+        # client.send_presense('online')
+        if client.authenticate():
+            client.is_authenticate = True
+            main_window.database = client.database
+            main_window.username = main_window.edtUserName.text()
+            main_window.addr = main_window.edtAddres.text()
+            main_window.port = main_window.edtPort.text()
+            update_contact_list()
+        else:
+            main_window.lstContacts.setModel(main_window.set_error('Ошибка подключения к серверу'))
 
     main_window.btnConnect.clicked.connect(connect)
 
     def update_contact_list():
-        if client.client_is_active:
+        if client.client_is_active and client.is_authenticate:
             client.get_contacts()
             main_window.lstContacts.setModel(main_window.get_contacts_view())
 

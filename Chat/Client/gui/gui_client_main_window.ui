@@ -32,7 +32,7 @@
       <x>10</x>
       <y>10</y>
       <width>381</width>
-      <height>121</height>
+      <height>151</height>
      </rect>
     </property>
     <property name="title">
@@ -65,8 +65,8 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>60</y>
-       <width>101</width>
+       <y>90</y>
+       <width>121</width>
        <height>21</height>
       </rect>
      </property>
@@ -78,7 +78,7 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>90</y>
+       <y>120</y>
        <width>91</width>
        <height>21</height>
       </rect>
@@ -91,7 +91,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>60</y>
+       <y>90</y>
        <width>221</width>
        <height>22</height>
       </rect>
@@ -104,7 +104,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>90</y>
+       <y>120</y>
        <width>111</width>
        <height>22</height>
       </rect>
@@ -120,7 +120,7 @@
      <property name="geometry">
       <rect>
        <x>280</x>
-       <y>90</y>
+       <y>120</y>
        <width>80</width>
        <height>22</height>
       </rect>
@@ -135,6 +135,29 @@
       <string>Connect</string>
      </property>
     </widget>
+    <widget class="QLineEdit" name="adtPassword">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>60</y>
+       <width>221</width>
+       <height>22</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>60</y>
+       <width>91</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Пароль</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QListView" name="lstContacts">
     <property name="enabled">
@@ -143,9 +166,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>141</y>
+      <y>171</y>
       <width>381</width>
-      <height>391</height>
+      <height>361</height>
      </rect>
     </property>
     <property name="editTriggers">
@@ -194,6 +217,17 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>edtUserName</tabstop>
+  <tabstop>adtPassword</tabstop>
+  <tabstop>edtAddres</tabstop>
+  <tabstop>edtPort</tabstop>
+  <tabstop>btnConnect</tabstop>
+  <tabstop>btnAddContact</tabstop>
+  <tabstop>btnDelContact</tabstop>
+  <tabstop>btnExit</tabstop>
+  <tabstop>lstContacts</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
