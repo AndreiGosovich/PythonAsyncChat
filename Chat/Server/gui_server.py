@@ -41,6 +41,15 @@ class ServerWindow(QtWidgets.QMainWindow):
             return messages_view
 
 
+class AddUserDialogWindow(QtWidgets.QDialog):
+    def __init__(self, parent):
+        QtWidgets.QWidget.__init__(self, parent)
+        self.init_ui()
+
+    def init_ui(self):
+        uic.loadUi('gui_add_user_server.ui', self)
+
+
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     window = ServerWindow()

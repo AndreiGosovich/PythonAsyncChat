@@ -29,6 +29,12 @@ class ClientWindow(QtWidgets.QMainWindow):
                 contacts_view.appendRow(QStandardItem(contact.user_contact))
             return contacts_view
 
+    @staticmethod
+    def set_error(text):
+        contacts_view = QStandardItemModel()
+        contacts_view.appendRow(QStandardItem(text))
+        return contacts_view
+
 
 class ChatDialogWindow(QtWidgets.QDialog):
     def __init__(self, contact, parent):

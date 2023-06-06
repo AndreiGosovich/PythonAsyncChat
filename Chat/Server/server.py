@@ -1,8 +1,10 @@
 import argparse
 import calendar
 import dis
+import hashlib
 import inspect
 import select
+# import socket
 import threading
 import time
 from socket import *
@@ -16,7 +18,7 @@ from PyQt6 import QtWidgets
 from PyQt6.QtCore import QTimer
 
 from server_database import ServerDatabaseStorage
-from gui_server import ServerWindow
+from gui_server import ServerWindow, AddUserDialogWindow
 
 sys.path.append("..")
 from log import server_log_config
@@ -59,6 +61,36 @@ def get_arguments():
     return args.addr, args.port
 
 
+@log()
+def get_password_hash(password):
+    """Генерация хэша пароля. Возвращает хэш переданной строки."""
+    password = password.encode('utf-8')
+    salt = 'Соль адыгейская, с пряностями'.encode('utf-8')
+    password_hash = hashlib.pbkdf2_hmac('sha512', password, salt, 10000)
+    return password_hash
+
+
+def login_required(func):
+    """Проверка авторизации пользователя"""
+
+    def check_action(*args, **kwargs):
+        check_result = False
+        for client in args[0].active_users:
+            if args[0].active_users[client] == args[2]:
+                check_result = True
+
+        if not check_result:
+            data = args[1]
+            if 'action' in data and data['action'] in ['presence', 'authenticate']:
+                check_result = True
+
+        if not check_result:
+            raise ValueError("Пользователь не авторизован для данного действия")
+        return func(*args, **kwargs)
+
+    return check_action
+
+
 class ServerVerifier(type):
 
     def __init__(self, clsname, bases, clsdict):
@@ -96,10 +128,24 @@ class ServerClient(threading.Thread, metaclass=ServerVerifier):
         self.database = None  #
         self.server_is_active = False
         self.socket = None
+        self.active_users = {}
         super().__init__()
 
     def set_database(self, connection_string, echo=False):
         self.database = ServerDatabaseStorage(connection_string, echo)
+
+    def create_user(self, user_name, password, information=''):
+        """Добавление в базу нового пользователя. Возвращается объект пользователя."""
+        password_hash = get_password_hash(password)
+        return self.database.add_user(user_name, password_hash, information)
+
+    def authenticate_user(self, user_name, password):
+        """Проверка логина и пароля пользователя"""
+        password_hash = get_password_hash(password)
+        print(password, password_hash)
+        if self.database.get_user_and_password(user_name, password_hash):
+            return True
+        return False
 
     # @log()
     def get_socket(self, addr, port):
@@ -118,7 +164,8 @@ class ServerClient(threading.Thread, metaclass=ServerVerifier):
         return client_data
 
     # @log()
-    def get_response(self, client_data):
+    @login_required
+    def get_response(self, client_data, sock):
         logger.debug("Формируем ответ клиенту")
         action = client_data['action']
 
@@ -131,7 +178,7 @@ class ServerClient(threading.Thread, metaclass=ServerVerifier):
             print(type(client_data), client_data)
             # Проверить, что пользователь есть в списке, если нет - добавить
             if not self.database.get_user(client_data['user']['account_name']):
-                user = self.database.add_user(client_data['user']['account_name'])
+                # user = self.database.add_user(client_data['user']['account_name'])
                 code = 201
             else:
                 code = 200
@@ -151,6 +198,16 @@ class ServerClient(threading.Thread, metaclass=ServerVerifier):
             self.database.remove_contact(client_data['user_id'], client_data['user_login'])
             code = 202
             alert = "Ok"
+        elif action == 'authenticate':
+            user_name = client_data['user']['account_name']
+            if self.authenticate_user(user_name, client_data['user']['password']):
+                code = 200
+                self.active_users[user_name] = sock
+                print(type(sock), sock)
+            else:
+                self.active_users.pop(user_name, None)
+                code = 402
+                alert = "Пользователь не авторизован"
 
         response = {
             "response": code,
@@ -172,6 +229,7 @@ class ServerClient(threading.Thread, metaclass=ServerVerifier):
                     sock.send(resp.encode('utf-8'))
                 except:  # Сокет недоступен, клиент отключился
                     logger.info('Клиент {} {} отключился'.format(sock.fileno(), sock.getpeername()))
+                    self.remove_from_active(sock)
                     sock.close()
                     all_clients.remove(sock)
 
@@ -191,6 +249,7 @@ class ServerClient(threading.Thread, metaclass=ServerVerifier):
 
                 except TypeError as e:  # Сокет недоступен, клиент отключился
                     # logger.info('Клиент {} {} отключился'.format(sock.fileno(), sock.getpeername()))
+                    self.remove_from_active(sock)
                     print(e)
                     sock.close()
                     all_clients.remove(sock)
@@ -204,15 +263,21 @@ class ServerClient(threading.Thread, metaclass=ServerVerifier):
         for sock in r_clients:
             try:
                 data = self.parse_client_data(sock.recv(1024).decode('utf-8'))
-                responses[sock], message = self.get_response(data)
+                responses[sock], message = self.get_response(data, sock)
                 if len(message):
                     messages[sock] = message
                 logger.info(f'Получено сообщение: {data} от Клиента: {sock.fileno()} {sock.getpeername()}')
             except Exception as e:
                 print(e)
+                self.remove_from_active(sock)
                 logger.info('Клиент {} {} отключился'.format(sock.fileno(), sock.getpeername()))
                 all_clients.remove(sock)
         return responses, messages
+
+    def remove_from_active(self, sock):
+        for user in self.active_users.copy():
+            if self.active_users[user] == sock:
+                self.active_users.pop(user, None)
 
     # @log()
     def run(self):
@@ -300,6 +365,23 @@ def main():
 
     update_messages_history()
     main_window.btnMessages.clicked.connect(update_messages_history)
+
+    def add_user_window():
+        if server_client.server_is_active:
+            def add_user(user_name, password, information):
+                if user_name and password:
+                    server_client.create_user(user_name, password, information)
+                    update_user_list()
+
+            dialog = AddUserDialogWindow(main_window)
+            dialog.accepted.connect(lambda: add_user(dialog.edtLogin.text(),
+                                                     dialog.edtPassword.text(),
+                                                     dialog.textEdit.toPlainText()
+                                                     )
+                                    )
+            dialog.open()
+
+    main_window.btnAddUser.clicked.connect(add_user_window)
 
     timer_update_user_list = QTimer()
     timer_update_user_list.timeout.connect(update_user_list)
