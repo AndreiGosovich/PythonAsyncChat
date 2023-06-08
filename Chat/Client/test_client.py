@@ -4,7 +4,7 @@ import sys
 import json
 from datetime import datetime, timezone
 import calendar
-from socket import *
+from socket import socket, AF_INET, SOCK_STREAM
 
 
 class TestGetArguments(unittest.TestCase):

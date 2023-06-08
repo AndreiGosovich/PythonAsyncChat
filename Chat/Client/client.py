@@ -2,32 +2,39 @@ import calendar
 import inspect
 import json
 import logging
-import socket
+import os
 import sys
 import threading
 import dis
 import time
 from datetime import datetime, timezone
-from socket import *
+from socket import socket, AF_INET, SOCK_STREAM
 from functools import wraps
 from threading import Thread
+from PyQt6 import QtWidgets
 
+path = os.path.abspath(os.path.join(".."))
+sys.path.append(path)
 
 from client_database import ClientDatabaseStorage
-
-from PyQt6 import QtWidgets
-from gui_client import ClientWindow, ChatDialogWindow, AddContactDialogWindow, DelContactDialogWindow
-
-sys.path.append("..")
+from gui_client import ClientWindow, ChatDialogWindow, AddContactDialogWindow,\
+    DelContactDialogWindow
 from log import client_log_config
 
 logger = logging.getLogger('chat.client')
 
 
 def log(func):
+    """
+    Декоратор. Логгер срабатывания функции
+
+    :param func: Оборачиваемая функция
+    :return: Оборачиваемая функция
+    """
     @wraps(func)
     def decorated(*args, **kwargs):
-        logger.debug(f' Функция {func.__name__} вызвана из функции {inspect.stack()[1].function}')
+        logger.debug(f' Функция {func.__name__} вызвана из функции '
+                     f'{inspect.stack()[1].function}')
         res = func(*args, **kwargs)
         return res
 
@@ -36,6 +43,11 @@ def log(func):
 
 @log
 def get_arguments():
+    """
+    Парсер строки запуска
+
+    :return: адрес, порт, имя пользователя
+    """
     logger.debug('Получаем аргументы')
     args = sys.argv
     if len(args) > 1:
@@ -57,10 +69,9 @@ def get_arguments():
 
 
 class ClientVerifier(type):
-
+    """Метакласс проверки корректности использования отдельных методов"""
     def __init__(self, clsname, bases, clsdict):
         for key, value in clsdict.items():
-            # print(key, value)
 
             # Проверка отсутствия объявления сокета на уровне класса
             if isinstance(value, socket):
@@ -86,8 +97,16 @@ class ClientVerifier(type):
 
 
 class MessangerClient(Thread, metaclass=ClientVerifier):
-
+    """Основной класс проекта"""
     def __init__(self, user_name, password, addr='localhost', port=7777):
+        """
+        Экземпляр класса клиента чата
+
+        :param user_name: Имя пользователя
+        :param password: Пароль
+        :param addr: Адрес сервера
+        :param port: Порт на сервере
+        """
         self.user_name = user_name
         self.password = password
         self.addr = addr
@@ -102,6 +121,13 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
 
     # @log
     def create_presence_message(self, status='online', _type='status'):
+        """
+        Создание presence сообщения
+
+        :param status: Статус подключения
+        :param _type: тип сообщения
+        :return: Сообщение в формате JSON
+        """
         logger.debug("Создаём presence сообщение серверу")
         return json.dumps({
             "action": "presence",
@@ -114,6 +140,11 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
         })
 
     def create_authenticate_message(self):
+        """
+        Создание сообщения аутентификации
+
+        :return: Сообщение в формате JSON
+        """
         logger.debug("Создаём authenticate сообщение серверу")
 
         return json.dumps({
@@ -127,6 +158,14 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
 
     # @log
     def create_text_message(self, to_user, message, encoding='utf-8'):
+        """
+        Создание сообщения другому пользователю
+
+        :param to_user: Кому отправить
+        :param message: Текст сообщения
+        :param encoding: Кодировка
+        :return: Сообщение в формате JSON
+        """
         logger.debug("Создаём текстовое сообщение")
         return json.dumps({
             "action": "msg",
@@ -138,6 +177,11 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
         })
 
     def create_get_contacts_message(self):
+        """
+        Создание сообщения запроса списка контактов пользователя
+
+        :return: Сообщение в формате JSON
+        """
         logger.debug("Создаём запрос списка контактов пользователя")
         return json.dumps({
             "action": "get_contacts",
@@ -146,6 +190,12 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
         })
 
     def create_add_contacts_message(self, contact):
+        """
+        Создание сообщения добавления контакта в список контактов пользователя
+
+        :param contact: Имя пользователя - контакта
+        :return: Сообщение в формате JSON
+        """
         logger.debug("Создаём запрос на добавление контакта в список")
         return json.dumps({
             "action": "add_contact",
@@ -155,6 +205,12 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
         })
 
     def create_del_contacts_message(self, contact):
+        """
+        Создание сообщения удаления контакта из списка контактов пользователя
+
+        :param contact: Имя пользователя - контакта
+        :return: Сообщение в формате JSON
+        """
         logger.debug("Создаём запрос на добавление контакта в список")
         return json.dumps({
             "action": "del_contact",
@@ -165,6 +221,12 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
 
     # @log
     def parse_server_response(self, data):
+        """
+        Обработка сообщения от сервера
+
+        :param data: сырое сообщения
+        :return: Сообщение в формате dict
+        """
         logger.debug("Парсим ответ сервера")
         response_data = json.loads(data)
 
@@ -177,6 +239,13 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
 
     # @log
     def get_socket(self, addr_family, socket_type):
+        """
+        Создание сокета подключения к серверу
+
+        :param addr_family: Тип адреса
+        :param socket_type: Тип сокета
+        :return: Объект сокета
+        """
         logger.debug("Создаём сокет")
         s = socket(addr_family, socket_type)  # Создать сокет TCP
         s.connect((self.addr, self.port))  # Соединиться с сервером
@@ -186,6 +255,7 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
 
     # @log
     def receiver(self):
+        """Приём сообщений от сервера"""
         while self.client_is_active:
             time.sleep(1)
             with self.lock:
@@ -208,6 +278,12 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
                         break
 
     def send_message(self, to_user, msg):
+        """
+        Отправка сообщения
+
+        :param to_user: КОму отправить
+        :param msg: Текст сообщения
+        """
         msg = msg.strip()
         with self.lock:
             self.database.save_message_to_history(self.user_name, to_user, msg)
@@ -216,6 +292,7 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
 
     # @log
     def sender(self):
+        """Отправка сообщений серверу"""
         logger.debug('Чат запущен.')
 
         self.show_help()
@@ -252,6 +329,7 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
 
     # @log
     def show_help(self):
+        """Отображение подсказки в консоли"""
         print('Команды в чате:')
         print('     help: показать эту подсказку')
         print('     exit: закрыть клиент')
@@ -260,6 +338,11 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
         print('     <имя получателя>, <сообщение>: отправить сообщение указанному пользователю (ALL - всем)')
 
     def send_presense(self, status):
+        """
+        Отправка presense сообщения
+
+        :param status:статус пользователя
+        """
         msg = self.create_presence_message(status)
         logger.debug("Отправляем Presense сообщение серверу")
 
@@ -271,6 +354,7 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
             logger.debug(f'Сообщение от сервера: {data}, длиной {len(data)} байт')
 
     def contacts_manager(self):
+        """Обработка меню контактов в консоли"""
         print('Выберите действие')
         print('     list:   вывести список контактов')
         print('     add:    добавить контакт')
@@ -284,6 +368,7 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
             self.add_or_del_contact(self.socket, input('Введите ник пользователя: '), action)
 
     def get_contacts(self):
+        """Запрос списка контаков"""
         msg = self.create_get_contacts_message()
         logger.debug("Отправляем Запрос списка контактов")
 
@@ -300,11 +385,18 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
                         self.database.add_contact(self.user_name, contact)
 
     def show_contacts(self):
+        """Отображение списка контактов в консоли"""
         contact_list = self.database.get_contacts(self.user_name)
         for c in contact_list:
             print(c)
 
     def add_or_del_contact(self, contact, action):
+        """
+        Добавление или удаление контакта в список
+
+        :param contact: Контакт
+        :param action: Дабваить или удалить
+        """
         if action == 'add':
             msg = self.create_add_contacts_message(contact)
             logger.debug("Отправляем Запрос добавления контакта")
@@ -326,6 +418,12 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
             self.get_contacts()
 
     def show_messages_history(self, user_from, user_to):
+        """
+        Отображение истории сообщений с пользователем в консоли
+
+        :param user_from: Пользователь от кого
+        :param user_to: Пользователь кому
+        """
         messages = self.database.get_message_history(user_from, user_to)
         for m in messages:
             print(f'({m[3]}) {m[0]}: {m[2]}')
@@ -351,8 +449,8 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
 
     # @log
     def run(self):
+        """Основной метод класса. Запуск логики."""
         logger.debug("Подключаемся...")
-
 
         if not self.socket:
             self.socket = self.get_socket(AF_INET, SOCK_STREAM)
@@ -376,6 +474,11 @@ class MessangerClient(Thread, metaclass=ClientVerifier):
 
 
 def ask_user_name():
+    """
+    Запрос имени пользователя в консоли
+
+    :return: Имя пользователя
+    """
     user_name = ''
     while not user_name:
         user_name = input('Укажите имя пользователя: ')
@@ -384,6 +487,7 @@ def ask_user_name():
 
 @log
 def main():
+    """Порядок запуска и настройки логики работы приложения"""
     logger.debug("Запускаем клиент чата")
     print("Запускаем клиент чата")
     args = get_arguments()
