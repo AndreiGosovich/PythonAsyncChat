@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Chat.Server package &#8212; документация Chat 1</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="Chat.log package" href="Chat.log.html" />
+    <link rel="prev" title="Chat.Client.gui package" href="Chat.Client.gui.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="chat-server-package">
+<h1>Chat.Server package<a class="headerlink" href="#chat-server-package" title="Permalink to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="module-Chat.Server.gui_server">
+<span id="chat-server-gui-server-module"></span><h2>Chat.Server.gui_server module<a class="headerlink" href="#module-Chat.Server.gui_server" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Chat.Server.gui_server.AddUserDialogWindow">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Chat.Server.gui_server.</span></span><span class="sig-name descname"><span class="pre">AddUserDialogWindow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.gui_server.AddUserDialogWindow" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">QDialog</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.gui_server.AddUserDialogWindow.init_ui">
+<span class="sig-name descname"><span class="pre">init_ui</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.gui_server.AddUserDialogWindow.init_ui" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Chat.Server.gui_server.ServerWindow">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Chat.Server.gui_server.</span></span><span class="sig-name descname"><span class="pre">ServerWindow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.gui_server.ServerWindow" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">QMainWindow</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.gui_server.ServerWindow.create_messages_history_view">
+<span class="sig-name descname"><span class="pre">create_messages_history_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.gui_server.ServerWindow.create_messages_history_view" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.gui_server.ServerWindow.create_users_list_view">
+<span class="sig-name descname"><span class="pre">create_users_list_view</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.gui_server.ServerWindow.create_users_list_view" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.gui_server.ServerWindow.init_ui">
+<span class="sig-name descname"><span class="pre">init_ui</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.gui_server.ServerWindow.init_ui" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-Chat.Server.server">
+<span id="chat-server-server-module"></span><h2>Chat.Server.server module<a class="headerlink" href="#module-Chat.Server.server" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Chat.Server.server.Port">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Chat.Server.server.</span></span><span class="sig-name descname"><span class="pre">Port</span></span><a class="headerlink" href="#Chat.Server.server.Port" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Дескриптор для описания порта</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Chat.Server.server.ServerClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Chat.Server.server.</span></span><span class="sig-name descname"><span class="pre">ServerClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server.ServerClient" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">Thread</span></code></p>
+<p>Основной класс</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server.ServerClient.authenticate_user">
+<span class="sig-name descname"><span class="pre">authenticate_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server.ServerClient.authenticate_user" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Проверка логина и пароля пользователя</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_name</strong> – Имя пользователя</p></li>
+<li><p><strong>password</strong> – Пароль</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Результат проверки (boolean)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server.ServerClient.create_user">
+<span class="sig-name descname"><span class="pre">create_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">information</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server.ServerClient.create_user" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Добавление в базу нового пользователя.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_name</strong> – Имя пользователя</p></li>
+<li><p><strong>password</strong> – Пароль</p></li>
+<li><p><strong>information</strong> – Информация о пользователе</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Объект пользователя</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server.ServerClient.get_response">
+<span class="sig-name descname"><span class="pre">get_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server.ServerClient.get_response" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server.ServerClient.get_socket">
+<span class="sig-name descname"><span class="pre">get_socket</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server.ServerClient.get_socket" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Настройка сокета сервера</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>addr</strong> – Адрес сервера</p></li>
+<li><p><strong>port</strong> – Порт сервера</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Объект сокета</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server.ServerClient.parse_client_data">
+<span class="sig-name descname"><span class="pre">parse_client_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server.ServerClient.parse_client_data" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Конвертация сообщения клиента в словарь</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> – Текст сообщения в формате JSON</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Словарь Python</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Chat.Server.server.ServerClient.port">
+<span class="sig-name descname"><span class="pre">port</span></span><a class="headerlink" href="#Chat.Server.server.ServerClient.port" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Переменная порта сервера</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server.ServerClient.read_requests">
+<span class="sig-name descname"><span class="pre">read_requests</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_clients</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_clients</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server.ServerClient.read_requests" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Чтение запросов из списка клиентов</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r_clients</strong> – Список клиентов, которые что-то прислали</p></li>
+<li><p><strong>all_clients</strong> – Список всех клиентов</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>не возвращает значений</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server.ServerClient.remove_from_active">
+<span class="sig-name descname"><span class="pre">remove_from_active</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sock</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server.ServerClient.remove_from_active" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Удалить клиента из активных</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sock</strong> – Сокет отключенного клиента</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>не возвращает значений</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server.ServerClient.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server.ServerClient.run" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Основной метод класса. Запускает поток сервера.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Не возвращает значений</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server.ServerClient.send_messages">
+<span class="sig-name descname"><span class="pre">send_messages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">w_clients</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_clients</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">messages_to_send</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server.ServerClient.send_messages" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Отправка сообщений клиентам</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>w_clients</strong> – ожидающие клиенты</p></li>
+<li><p><strong>all_clients</strong> – все подключенные клиенты</p></li>
+<li><p><strong>messages_to_send</strong> – сообщение для отправки</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>не возвращает значений</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server.ServerClient.set_database">
+<span class="sig-name descname"><span class="pre">set_database</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection_string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">echo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server.ServerClient.set_database" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Настройка базы данных</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>connection_string</strong> – строка подключения</p></li>
+<li><p><strong>echo</strong> – вывод подробной информации о взаимодействии с БД</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Не возвращает значений</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server.ServerClient.write_responses">
+<span class="sig-name descname"><span class="pre">write_responses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">requests</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w_clients</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_clients</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server.ServerClient.write_responses" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Отправка ответов сервера</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>requests</strong> – запросы (dict)</p></li>
+<li><p><strong>w_clients</strong> – список клиентов на чтение</p></li>
+<li><p><strong>all_clients</strong> – список всех подключенных клиентов</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>не возвращает значений</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Chat.Server.server.ServerVerifier">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Chat.Server.server.</span></span><span class="sig-name descname"><span class="pre">ServerVerifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clsname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clsdict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server.ServerVerifier" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">type</span></code></p>
+<p>Метакласс. Проверка использования отдельных методов и функций.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Chat.Server.server.get_arguments">
+<span class="sig-prename descclassname"><span class="pre">Chat.Server.server.</span></span><span class="sig-name descname"><span class="pre">get_arguments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server.get_arguments" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Парсинг параметров строки запуска</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>адрес, порт</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Chat.Server.server.get_password_hash">
+<span class="sig-prename descclassname"><span class="pre">Chat.Server.server.</span></span><span class="sig-name descname"><span class="pre">get_password_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server.get_password_hash" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Генерация хэша пароля</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>password</strong> – пароль (str)</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>хэш переданной строки (st</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Chat.Server.server.log">
+<span class="sig-prename descclassname"><span class="pre">Chat.Server.server.</span></span><span class="sig-name descname"><span class="pre">log</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server.log" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Декоратор для логирования запуска функций</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Chat.Server.server.login_required">
+<span class="sig-prename descclassname"><span class="pre">Chat.Server.server.</span></span><span class="sig-name descname"><span class="pre">login_required</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server.login_required" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Декоратор.
+Проверяется авторизован ли пользователь.
+Допускается обработка presence и authenticate сообщений, если пользователь не авторизован.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>func</strong> – проверяемая функция</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>проверяемая функция</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Chat.Server.server.main">
+<span class="sig-prename descclassname"><span class="pre">Chat.Server.server.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server.main" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Создание экземпляра класса, создание интерфейса, запуск клиента</p>
+</dd></dl>
+
+</section>
+<section id="module-Chat.Server.server_database">
+<span id="chat-server-server-database-module"></span><h2>Chat.Server.server_database module<a class="headerlink" href="#module-Chat.Server.server_database" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Chat.Server.server_database.</span></span><span class="sig-name descname"><span class="pre">ServerDatabaseStorage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection_string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_echo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.Base">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.Base" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The base class of the class hierarchy.</p>
+<p>When called, it accepts no arguments and returns a new featureless
+instance that has no instance attributes and cannot be given any.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.Base.metadata">
+<span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">MetaData()</span></em><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.Base.metadata" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.Base.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;sqlalchemy.orm.decl_api.registry</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.Base.registry" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.ContactList">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ContactList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_owner</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_contact</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.ContactList" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#Chat.Server.server_database.ServerDatabaseStorage.Base" title="sqlalchemy.orm.decl_api.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.ContactList.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.ContactList.id" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.ContactList.user_contact">
+<span class="sig-name descname"><span class="pre">user_contact</span></span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.ContactList.user_contact" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.ContactList.user_owner">
+<span class="sig-name descname"><span class="pre">user_owner</span></span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.ContactList.user_owner" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.MessagesHistory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MessagesHistory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_send</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.MessagesHistory" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#Chat.Server.server_database.ServerDatabaseStorage.Base" title="sqlalchemy.orm.decl_api.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.MessagesHistory.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.MessagesHistory.id" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.MessagesHistory.message">
+<span class="sig-name descname"><span class="pre">message</span></span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.MessagesHistory.message" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.MessagesHistory.time_send">
+<span class="sig-name descname"><span class="pre">time_send</span></span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.MessagesHistory.time_send" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.MessagesHistory.user_id_from">
+<span class="sig-name descname"><span class="pre">user_id_from</span></span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.MessagesHistory.user_id_from" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.MessagesHistory.user_id_to">
+<span class="sig-name descname"><span class="pre">user_id_to</span></span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.MessagesHistory.user_id_to" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.UserHistory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UserHistory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ip_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_login</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.UserHistory" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#Chat.Server.server_database.ServerDatabaseStorage.Base" title="sqlalchemy.orm.decl_api.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.UserHistory.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.UserHistory.id" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.UserHistory.ip_address">
+<span class="sig-name descname"><span class="pre">ip_address</span></span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.UserHistory.ip_address" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.UserHistory.time_login">
+<span class="sig-name descname"><span class="pre">time_login</span></span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.UserHistory.time_login" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.UserHistory.user">
+<span class="sig-name descname"><span class="pre">user</span></span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.UserHistory.user" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.UserHistory.user_id">
+<span class="sig-name descname"><span class="pre">user_id</span></span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.UserHistory.user_id" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.Users">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Users</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password_hash</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">information</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.Users" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#Chat.Server.server_database.ServerDatabaseStorage.Base" title="sqlalchemy.orm.decl_api.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.Users.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.Users.id" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.Users.information">
+<span class="sig-name descname"><span class="pre">information</span></span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.Users.information" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.Users.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.Users.name" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.Users.password_hash">
+<span class="sig-name descname"><span class="pre">password_hash</span></span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.Users.password_hash" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.add_contact">
+<span class="sig-name descname"><span class="pre">add_contact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_owner</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_contact</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.add_contact" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.add_user">
+<span class="sig-name descname"><span class="pre">add_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password_hash</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">information</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.add_user" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.add_user_to_history">
+<span class="sig-name descname"><span class="pre">add_user_to_history</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ip_address</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.add_user_to_history" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.change_engine">
+<span class="sig-name descname"><span class="pre">change_engine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection_string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_echo</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.change_engine" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.get_all_users">
+<span class="sig-name descname"><span class="pre">get_all_users</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.get_all_users" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.get_contacts">
+<span class="sig-name descname"><span class="pre">get_contacts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_owner</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.get_contacts" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.get_messages_history">
+<span class="sig-name descname"><span class="pre">get_messages_history</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.get_messages_history" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.get_time">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.get_time" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.get_user">
+<span class="sig-name descname"><span class="pre">get_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.get_user" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.get_user_and_password">
+<span class="sig-name descname"><span class="pre">get_user_and_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password_hash</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.get_user_and_password" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.map_tables">
+<span class="sig-name descname"><span class="pre">map_tables</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.map_tables" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.remove_contact">
+<span class="sig-name descname"><span class="pre">remove_contact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_owner</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_contact</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.remove_contact" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.save_messge_to_history">
+<span class="sig-name descname"><span class="pre">save_messge_to_history</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.save_messge_to_history" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.server_database.ServerDatabaseStorage.user_connection">
+<span class="sig-name descname"><span class="pre">user_connection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ip_address</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.server_database.ServerDatabaseStorage.user_connection" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-Chat.Server.test_server">
+<span id="chat-server-test-server-module"></span><h2>Chat.Server.test_server module<a class="headerlink" href="#module-Chat.Server.test_server" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Chat.Server.test_server.TestGetArguments">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Chat.Server.test_server.</span></span><span class="sig-name descname"><span class="pre">TestGetArguments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.test_server.TestGetArguments" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.test_server.TestGetArguments.testAddressOnly">
+<span class="sig-name descname"><span class="pre">testAddressOnly</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.test_server.TestGetArguments.testAddressOnly" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.test_server.TestGetArguments.testAllArguments">
+<span class="sig-name descname"><span class="pre">testAllArguments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.test_server.TestGetArguments.testAllArguments" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Chat.Server.test_server.TestGetResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Chat.Server.test_server.</span></span><span class="sig-name descname"><span class="pre">TestGetResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.test_server.TestGetResponse" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.test_server.TestGetResponse.test404">
+<span class="sig-name descname"><span class="pre">test404</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.test_server.TestGetResponse.test404" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.test_server.TestGetResponse.testPresenceMessage">
+<span class="sig-name descname"><span class="pre">testPresenceMessage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.test_server.TestGetResponse.testPresenceMessage" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Chat.Server.test_server.TestGetSocket">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Chat.Server.test_server.</span></span><span class="sig-name descname"><span class="pre">TestGetSocket</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.test_server.TestGetSocket" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.test_server.TestGetSocket.testAddressFamily">
+<span class="sig-name descname"><span class="pre">testAddressFamily</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.test_server.TestGetSocket.testAddressFamily" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.test_server.TestGetSocket.testSocketType">
+<span class="sig-name descname"><span class="pre">testSocketType</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.test_server.TestGetSocket.testSocketType" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.test_server.TestGetSocket.testTypeSocket">
+<span class="sig-name descname"><span class="pre">testTypeSocket</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.test_server.TestGetSocket.testTypeSocket" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Chat.Server.test_server.TestParseClientData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Chat.Server.test_server.</span></span><span class="sig-name descname"><span class="pre">TestParseClientData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.test_server.TestParseClientData" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Chat.Server.test_server.TestParseClientData.testFullString">
+<span class="sig-name descname"><span class="pre">testFullString</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Chat.Server.test_server.TestParseClientData.testFullString" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-Chat.Server">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-Chat.Server" title="Permalink to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Chat</a></h1>
+
+
+
+
+
+
+
+
+<h3>Навигация</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Chat</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="Chat.html">Chat package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">Chat</a><ul>
+  <li><a href="Chat.html">Chat package</a><ul>
+      <li>Previous: <a href="Chat.Client.gui.html" title="предыдущая глава">Chat.Client.gui package</a></li>
+      <li>Next: <a href="Chat.log.html" title="следующая глава">Chat.log package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Быстрый поиск</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Andrei.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/Chat.Server.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Chat &#8212; документация Chat 1</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="Chat package" href="Chat.html" />
+    <link rel="prev" title="Welcome to Chat’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="chat">
+<h1>Chat<a class="headerlink" href="#chat" title="Permalink to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Chat.html">Chat package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Chat.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Chat.Client.html">Chat.Client package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Chat.Client.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Client.gui.html">Chat.Client.gui package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.gui.html#module-Chat.Client.gui">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="Chat.Client.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Chat.Client.html#module-Chat.Client.client">Chat.Client.client module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Client.html#Chat.Client.client.ClientVerifier"><code class="docutils literal notranslate"><span class="pre">ClientVerifier</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Client.html#Chat.Client.client.MessangerClient"><code class="docutils literal notranslate"><span class="pre">MessangerClient</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client.MessangerClient.add_or_del_contact"><code class="docutils literal notranslate"><span class="pre">MessangerClient.add_or_del_contact()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client.MessangerClient.contacts_manager"><code class="docutils literal notranslate"><span class="pre">MessangerClient.contacts_manager()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client.MessangerClient.create_add_contacts_message"><code class="docutils literal notranslate"><span class="pre">MessangerClient.create_add_contacts_message()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client.MessangerClient.create_del_contacts_message"><code class="docutils literal notranslate"><span class="pre">MessangerClient.create_del_contacts_message()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client.MessangerClient.create_get_contacts_message"><code class="docutils literal notranslate"><span class="pre">MessangerClient.create_get_contacts_message()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client.MessangerClient.create_presence_message"><code class="docutils literal notranslate"><span class="pre">MessangerClient.create_presence_message()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client.MessangerClient.create_text_message"><code class="docutils literal notranslate"><span class="pre">MessangerClient.create_text_message()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client.MessangerClient.get_contacts"><code class="docutils literal notranslate"><span class="pre">MessangerClient.get_contacts()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client.MessangerClient.get_socket"><code class="docutils literal notranslate"><span class="pre">MessangerClient.get_socket()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client.MessangerClient.parse_server_response"><code class="docutils literal notranslate"><span class="pre">MessangerClient.parse_server_response()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client.MessangerClient.receiver"><code class="docutils literal notranslate"><span class="pre">MessangerClient.receiver()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client.MessangerClient.run"><code class="docutils literal notranslate"><span class="pre">MessangerClient.run()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client.MessangerClient.send_message"><code class="docutils literal notranslate"><span class="pre">MessangerClient.send_message()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client.MessangerClient.send_presense"><code class="docutils literal notranslate"><span class="pre">MessangerClient.send_presense()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client.MessangerClient.sender"><code class="docutils literal notranslate"><span class="pre">MessangerClient.sender()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client.MessangerClient.show_contacts"><code class="docutils literal notranslate"><span class="pre">MessangerClient.show_contacts()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client.MessangerClient.show_help"><code class="docutils literal notranslate"><span class="pre">MessangerClient.show_help()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client.MessangerClient.show_messages_history"><code class="docutils literal notranslate"><span class="pre">MessangerClient.show_messages_history()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Client.html#Chat.Client.client.ask_user_name"><code class="docutils literal notranslate"><span class="pre">ask_user_name()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Client.html#Chat.Client.client.get_arguments"><code class="docutils literal notranslate"><span class="pre">get_arguments()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Client.html#Chat.Client.client.log"><code class="docutils literal notranslate"><span class="pre">log()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Client.html#Chat.Client.client.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="Chat.Client.html#module-Chat.Client.client_database">Chat.Client.client_database module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Client.html#Chat.Client.client_database.ClientDatabaseStorage"><code class="docutils literal notranslate"><span class="pre">ClientDatabaseStorage</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client_database.ClientDatabaseStorage.Base"><code class="docutils literal notranslate"><span class="pre">ClientDatabaseStorage.Base</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Client.html#Chat.Client.client_database.ClientDatabaseStorage.Base.metadata"><code class="docutils literal notranslate"><span class="pre">ClientDatabaseStorage.Base.metadata</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Client.html#Chat.Client.client_database.ClientDatabaseStorage.Base.registry"><code class="docutils literal notranslate"><span class="pre">ClientDatabaseStorage.Base.registry</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client_database.ClientDatabaseStorage.ContactList"><code class="docutils literal notranslate"><span class="pre">ClientDatabaseStorage.ContactList</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Client.html#Chat.Client.client_database.ClientDatabaseStorage.ContactList.id"><code class="docutils literal notranslate"><span class="pre">ClientDatabaseStorage.ContactList.id</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Client.html#Chat.Client.client_database.ClientDatabaseStorage.ContactList.user_contact"><code class="docutils literal notranslate"><span class="pre">ClientDatabaseStorage.ContactList.user_contact</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Client.html#Chat.Client.client_database.ClientDatabaseStorage.ContactList.user_owner"><code class="docutils literal notranslate"><span class="pre">ClientDatabaseStorage.ContactList.user_owner</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client_database.ClientDatabaseStorage.MessagesHistory"><code class="docutils literal notranslate"><span class="pre">ClientDatabaseStorage.MessagesHistory</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Client.html#Chat.Client.client_database.ClientDatabaseStorage.MessagesHistory.id"><code class="docutils literal notranslate"><span class="pre">ClientDatabaseStorage.MessagesHistory.id</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Client.html#Chat.Client.client_database.ClientDatabaseStorage.MessagesHistory.message"><code class="docutils literal notranslate"><span class="pre">ClientDatabaseStorage.MessagesHistory.message</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Client.html#Chat.Client.client_database.ClientDatabaseStorage.MessagesHistory.time_send"><code class="docutils literal notranslate"><span class="pre">ClientDatabaseStorage.MessagesHistory.time_send</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Client.html#Chat.Client.client_database.ClientDatabaseStorage.MessagesHistory.user_from"><code class="docutils literal notranslate"><span class="pre">ClientDatabaseStorage.MessagesHistory.user_from</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Client.html#Chat.Client.client_database.ClientDatabaseStorage.MessagesHistory.user_to"><code class="docutils literal notranslate"><span class="pre">ClientDatabaseStorage.MessagesHistory.user_to</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client_database.ClientDatabaseStorage.add_contact"><code class="docutils literal notranslate"><span class="pre">ClientDatabaseStorage.add_contact()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client_database.ClientDatabaseStorage.change_engine"><code class="docutils literal notranslate"><span class="pre">ClientDatabaseStorage.change_engine()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client_database.ClientDatabaseStorage.get_contacts"><code class="docutils literal notranslate"><span class="pre">ClientDatabaseStorage.get_contacts()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client_database.ClientDatabaseStorage.get_message_history"><code class="docutils literal notranslate"><span class="pre">ClientDatabaseStorage.get_message_history()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client_database.ClientDatabaseStorage.get_time"><code class="docutils literal notranslate"><span class="pre">ClientDatabaseStorage.get_time()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client_database.ClientDatabaseStorage.map_tables"><code class="docutils literal notranslate"><span class="pre">ClientDatabaseStorage.map_tables()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client_database.ClientDatabaseStorage.remove_all_contacts"><code class="docutils literal notranslate"><span class="pre">ClientDatabaseStorage.remove_all_contacts()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.client_database.ClientDatabaseStorage.save_message_to_history"><code class="docutils literal notranslate"><span class="pre">ClientDatabaseStorage.save_message_to_history()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="Chat.Client.html#module-Chat.Client.gui_client">Chat.Client.gui_client module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Client.html#Chat.Client.gui_client.AddContactDialogWindow"><code class="docutils literal notranslate"><span class="pre">AddContactDialogWindow</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.gui_client.AddContactDialogWindow.init_ui"><code class="docutils literal notranslate"><span class="pre">AddContactDialogWindow.init_ui()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Client.html#Chat.Client.gui_client.ChatDialogWindow"><code class="docutils literal notranslate"><span class="pre">ChatDialogWindow</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.gui_client.ChatDialogWindow.create_messages_history_view"><code class="docutils literal notranslate"><span class="pre">ChatDialogWindow.create_messages_history_view()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.gui_client.ChatDialogWindow.init_ui"><code class="docutils literal notranslate"><span class="pre">ChatDialogWindow.init_ui()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Client.html#Chat.Client.gui_client.ClientWindow"><code class="docutils literal notranslate"><span class="pre">ClientWindow</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.gui_client.ClientWindow.get_contacts_view"><code class="docutils literal notranslate"><span class="pre">ClientWindow.get_contacts_view()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.gui_client.ClientWindow.init_ui"><code class="docutils literal notranslate"><span class="pre">ClientWindow.init_ui()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Client.html#Chat.Client.gui_client.DelContactDialogWindow"><code class="docutils literal notranslate"><span class="pre">DelContactDialogWindow</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.gui_client.DelContactDialogWindow.init_ui"><code class="docutils literal notranslate"><span class="pre">DelContactDialogWindow.init_ui()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="Chat.Client.html#module-Chat.Client.test_client">Chat.Client.test_client module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Client.html#Chat.Client.test_client.TestCreatePresenceMessage"><code class="docutils literal notranslate"><span class="pre">TestCreatePresenceMessage</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.test_client.TestCreatePresenceMessage.testFullString"><code class="docutils literal notranslate"><span class="pre">TestCreatePresenceMessage.testFullString()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Client.html#Chat.Client.test_client.TestGetArguments"><code class="docutils literal notranslate"><span class="pre">TestGetArguments</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.test_client.TestGetArguments.testAddressOnly"><code class="docutils literal notranslate"><span class="pre">TestGetArguments.testAddressOnly()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.test_client.TestGetArguments.testAllArguments"><code class="docutils literal notranslate"><span class="pre">TestGetArguments.testAllArguments()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.test_client.TestGetArguments.testError"><code class="docutils literal notranslate"><span class="pre">TestGetArguments.testError()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Client.html#Chat.Client.test_client.TestGetSocket"><code class="docutils literal notranslate"><span class="pre">TestGetSocket</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.test_client.TestGetSocket.testAddressFamily"><code class="docutils literal notranslate"><span class="pre">TestGetSocket.testAddressFamily()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.test_client.TestGetSocket.testSocketType"><code class="docutils literal notranslate"><span class="pre">TestGetSocket.testSocketType()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.test_client.TestGetSocket.testTypeSocket"><code class="docutils literal notranslate"><span class="pre">TestGetSocket.testTypeSocket()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Client.html#Chat.Client.test_client.TestParseServerResponse"><code class="docutils literal notranslate"><span class="pre">TestParseServerResponse</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Client.html#Chat.Client.test_client.TestParseServerResponse.testFullString"><code class="docutils literal notranslate"><span class="pre">TestParseServerResponse.testFullString()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="Chat.Client.html#module-Chat.Client">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Chat.Server.html">Chat.Server package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Chat.Server.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Chat.Server.html#module-Chat.Server.gui_server">Chat.Server.gui_server module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Server.html#Chat.Server.gui_server.ServerWindow"><code class="docutils literal notranslate"><span class="pre">ServerWindow</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.gui_server.ServerWindow.create_messages_history_view"><code class="docutils literal notranslate"><span class="pre">ServerWindow.create_messages_history_view()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.gui_server.ServerWindow.create_users_list_view"><code class="docutils literal notranslate"><span class="pre">ServerWindow.create_users_list_view()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.gui_server.ServerWindow.init_ui"><code class="docutils literal notranslate"><span class="pre">ServerWindow.init_ui()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="Chat.Server.html#module-Chat.Server.server">Chat.Server.server module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Server.html#Chat.Server.server.Port"><code class="docutils literal notranslate"><span class="pre">Port</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Server.html#Chat.Server.server.ServerClient"><code class="docutils literal notranslate"><span class="pre">ServerClient</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server.ServerClient.get_response"><code class="docutils literal notranslate"><span class="pre">ServerClient.get_response()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server.ServerClient.get_socket"><code class="docutils literal notranslate"><span class="pre">ServerClient.get_socket()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server.ServerClient.parse_client_data"><code class="docutils literal notranslate"><span class="pre">ServerClient.parse_client_data()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server.ServerClient.port"><code class="docutils literal notranslate"><span class="pre">ServerClient.port</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server.ServerClient.read_requests"><code class="docutils literal notranslate"><span class="pre">ServerClient.read_requests()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server.ServerClient.run"><code class="docutils literal notranslate"><span class="pre">ServerClient.run()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server.ServerClient.send_messages"><code class="docutils literal notranslate"><span class="pre">ServerClient.send_messages()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server.ServerClient.set_database"><code class="docutils literal notranslate"><span class="pre">ServerClient.set_database()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server.ServerClient.write_responses"><code class="docutils literal notranslate"><span class="pre">ServerClient.write_responses()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Server.html#Chat.Server.server.ServerVerifier"><code class="docutils literal notranslate"><span class="pre">ServerVerifier</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Server.html#Chat.Server.server.get_arguments"><code class="docutils literal notranslate"><span class="pre">get_arguments()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Server.html#Chat.Server.server.log"><code class="docutils literal notranslate"><span class="pre">log()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Server.html#Chat.Server.server.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="Chat.Server.html#module-Chat.Server.server_database">Chat.Server.server_database module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.Base"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.Base</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.Base.metadata"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.Base.metadata</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.Base.registry"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.Base.registry</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.ContactList"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.ContactList</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.ContactList.id"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.ContactList.id</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.ContactList.user_contact"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.ContactList.user_contact</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.ContactList.user_owner"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.ContactList.user_owner</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.MessagesHistory"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.MessagesHistory</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.MessagesHistory.id"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.MessagesHistory.id</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.MessagesHistory.message"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.MessagesHistory.message</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.MessagesHistory.time_send"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.MessagesHistory.time_send</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.MessagesHistory.user_id_from"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.MessagesHistory.user_id_from</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.MessagesHistory.user_id_to"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.MessagesHistory.user_id_to</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.UserHistory"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.UserHistory</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.UserHistory.id"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.UserHistory.id</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.UserHistory.ip_address"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.UserHistory.ip_address</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.UserHistory.time_login"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.UserHistory.time_login</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.UserHistory.user"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.UserHistory.user</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.UserHistory.user_id"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.UserHistory.user_id</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.Users"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.Users</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.Users.id"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.Users.id</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.Users.information"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.Users.information</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.Users.name"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.Users.name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.add_contact"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.add_contact()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.add_user"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.add_user()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.add_user_to_history"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.add_user_to_history()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.change_engine"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.change_engine()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.get_all_users"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.get_all_users()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.get_contacts"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.get_contacts()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.get_messages_history"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.get_messages_history()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.get_time"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.get_time()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.get_user"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.get_user()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.map_tables"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.map_tables()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.remove_contact"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.remove_contact()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.save_messge_to_history"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.save_messge_to_history()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.server_database.ServerDatabaseStorage.user_connection"><code class="docutils literal notranslate"><span class="pre">ServerDatabaseStorage.user_connection()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="Chat.Server.html#module-Chat.Server.test_server">Chat.Server.test_server module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Server.html#Chat.Server.test_server.TestGetArguments"><code class="docutils literal notranslate"><span class="pre">TestGetArguments</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.test_server.TestGetArguments.testAddressOnly"><code class="docutils literal notranslate"><span class="pre">TestGetArguments.testAddressOnly()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.test_server.TestGetArguments.testAllArguments"><code class="docutils literal notranslate"><span class="pre">TestGetArguments.testAllArguments()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Server.html#Chat.Server.test_server.TestGetResponse"><code class="docutils literal notranslate"><span class="pre">TestGetResponse</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.test_server.TestGetResponse.test404"><code class="docutils literal notranslate"><span class="pre">TestGetResponse.test404()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.test_server.TestGetResponse.testPresenceMessage"><code class="docutils literal notranslate"><span class="pre">TestGetResponse.testPresenceMessage()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Server.html#Chat.Server.test_server.TestGetSocket"><code class="docutils literal notranslate"><span class="pre">TestGetSocket</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.test_server.TestGetSocket.testAddressFamily"><code class="docutils literal notranslate"><span class="pre">TestGetSocket.testAddressFamily()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.test_server.TestGetSocket.testSocketType"><code class="docutils literal notranslate"><span class="pre">TestGetSocket.testSocketType()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.test_server.TestGetSocket.testTypeSocket"><code class="docutils literal notranslate"><span class="pre">TestGetSocket.testTypeSocket()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="Chat.Server.html#Chat.Server.test_server.TestParseClientData"><code class="docutils literal notranslate"><span class="pre">TestParseClientData</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="Chat.Server.html#Chat.Server.test_server.TestParseClientData.testFullString"><code class="docutils literal notranslate"><span class="pre">TestParseClientData.testFullString()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="Chat.Server.html#module-Chat.Server">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Chat.log.html">Chat.log package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Chat.log.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Chat.log.html#module-Chat.log.client_log_config">Chat.log.client_log_config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Chat.log.html#module-Chat.log.server_log_config">Chat.log.server_log_config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Chat.log.html#module-Chat.log">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Chat.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Chat.html#module-Chat.starter">Chat.starter module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Chat.html#Chat.starter.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Chat.html#Chat.starter.run_chat_subprocess"><code class="docutils literal notranslate"><span class="pre">run_chat_subprocess()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Chat.html#Chat.starter.run_many_chats"><code class="docutils literal notranslate"><span class="pre">run_many_chats()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Chat.html#Chat.starter.start_server"><code class="docutils literal notranslate"><span class="pre">start_server()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Chat.html#module-Chat">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Chat</a></h1>
+
+
+
+
+
+
+
+
+<h3>Навигация</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Chat</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Chat.html">Chat package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="предыдущая глава">Welcome to Chat’s documentation!</a></li>
+      <li>Next: <a href="Chat.html" title="следующая глава">Chat package</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Быстрый поиск</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Andrei.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/modules.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

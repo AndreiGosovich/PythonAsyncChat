@@ -27,6 +27,11 @@ logger = logging.getLogger('chat.server')
 
 
 def log():
+    """
+    Декоратор для логирования запуска функций
+
+    :return:
+    """
     def decorator(func):
         @wraps(func)
         def decorated(*args, **kwargs):
@@ -37,8 +42,10 @@ def log():
     return decorator
 
 
-# Дескриптор для описания порта:
 class Port:
+    """
+    Дескриптор для описания порта
+    """
     def __set__(self, instance, value):
         if not 1023 < int(value) < 65536:
             error_string = f'Указан неверный порт {value}. Порт должен быть в диапазоне с 1024 до 65535.'
@@ -52,6 +59,11 @@ class Port:
 
 @log()
 def get_arguments():
+    """
+    Парсинг параметров строки запуска
+
+    :return: адрес, порт
+    """
     logger.debug('Получаем аргументы')
     parser = argparse.ArgumentParser()
     parser.add_argument('-p', dest='port', type=int, help='Port of server run. Default 7777')
@@ -63,7 +75,12 @@ def get_arguments():
 
 @log()
 def get_password_hash(password):
-    """Генерация хэша пароля. Возвращает хэш переданной строки."""
+    """
+    Генерация хэша пароля
+
+    :param password: пароль (str)
+    :return: хэш переданной строки (st
+    """
     password = password.encode('utf-8')
     salt = 'Соль адыгейская, с пряностями'.encode('utf-8')
     password_hash = hashlib.pbkdf2_hmac('sha512', password, salt, 10000)
@@ -71,8 +88,14 @@ def get_password_hash(password):
 
 
 def login_required(func):
-    """Проверка авторизации пользователя"""
+    """
+    Декоратор.
+    Проверяется авторизован ли пользователь.
+    Допускается обработка presence и authenticate сообщений, если пользователь не авторизован.
 
+    :param func: проверяемая функция
+    :return: проверяемая функция
+    """
     def check_action(*args, **kwargs):
         check_result = False
         for client in args[0].active_users:
@@ -92,7 +115,7 @@ def login_required(func):
 
 
 class ServerVerifier(type):
-
+    """Метакласс. Проверка использования отдельных методов и функций."""
     def __init__(self, clsname, bases, clsdict):
         for key, value in clsdict.items():
 
@@ -120,9 +143,17 @@ class ServerVerifier(type):
 
 
 class ServerClient(threading.Thread, metaclass=ServerVerifier):
+    """Основной класс"""
     port = Port()
+    """Переменная порта сервера"""
 
     def __init__(self, addr, port):
+        """
+        Инициализация экземпляра класса Сервера
+
+        :param addr: адрес сервера
+        :param port: порт сервера
+        """
         self.addr = addr or ''
         self.port = port or 7777
         self.database = None  #
@@ -132,15 +163,35 @@ class ServerClient(threading.Thread, metaclass=ServerVerifier):
         super().__init__()
 
     def set_database(self, connection_string, echo=False):
+        """
+        Настройка базы данных
+
+        :param connection_string: строка подключения
+        :param echo: вывод подробной информации о взаимодействии с БД
+        :return: Не возвращает значений
+        """
         self.database = ServerDatabaseStorage(connection_string, echo)
 
     def create_user(self, user_name, password, information=''):
-        """Добавление в базу нового пользователя. Возвращается объект пользователя."""
+        """
+        Добавление в базу нового пользователя.
+
+        :param user_name: Имя пользователя
+        :param password: Пароль
+        :param information: Информация о пользователе
+        :return: Объект пользователя
+        """
         password_hash = get_password_hash(password)
         return self.database.add_user(user_name, password_hash, information)
 
     def authenticate_user(self, user_name, password):
-        """Проверка логина и пароля пользователя"""
+        """
+        Проверка логина и пароля пользователя
+
+        :param user_name: Имя пользователя
+        :param password: Пароль
+        :return: Результат проверки (boolean)
+        """
         password_hash = get_password_hash(password)
         print(password, password_hash)
         if self.database.get_user_and_password(user_name, password_hash):
@@ -149,6 +200,13 @@ class ServerClient(threading.Thread, metaclass=ServerVerifier):
 
     # @log()
     def get_socket(self, addr, port):
+        """
+        Настройка сокета сервера
+
+        :param addr: Адрес сервера
+        :param port: Порт сервера
+        :return: Объект сокета
+        """
         logger.debug("Создаём сокет")
         s = socket(AF_INET, SOCK_STREAM)
         s.bind((addr, int(port)))
@@ -159,6 +217,12 @@ class ServerClient(threading.Thread, metaclass=ServerVerifier):
 
     # @log()
     def parse_client_data(self, data):
+        """
+        Конвертация сообщения клиента в словарь
+
+        :param data: Текст сообщения в формате JSON
+        :return: Словарь Python
+        """
         logger.debug("Парсим сообщение от клиента")
         client_data = json.loads(data)
         return client_data
@@ -166,6 +230,13 @@ class ServerClient(threading.Thread, metaclass=ServerVerifier):
     # @log()
     @login_required
     def get_response(self, client_data, sock):
+        """
+        Подготовка ответа клиенту
+
+        :param client_data: данные от клиента (dict)
+        :param sock: экземпляр сокета клиента
+        :return: (ответ сервера, пересылаемое сообщение)
+        """
         logger.debug("Формируем ответ клиенту")
         action = client_data['action']
 
@@ -219,7 +290,13 @@ class ServerClient(threading.Thread, metaclass=ServerVerifier):
 
     # @log()
     def write_responses(self, requests, w_clients, all_clients):
-        """ Эхо-ответ сервера клиентам, от которых были запросы
+        """
+        Отправка ответов сервера
+
+        :param requests: запросы (dict)
+        :param w_clients: список клиентов на чтение
+        :param all_clients: список всех подключенных клиентов
+        :return: не возвращает значений
         """
         for sock in w_clients:
             if sock in requests:
@@ -235,7 +312,13 @@ class ServerClient(threading.Thread, metaclass=ServerVerifier):
 
     # @log()
     def send_messages(self, w_clients, all_clients, messages_to_send):
-        """ Текстовое сообщение всем подключенным клиентам
+        """
+        Отправка сообщений клиентам
+
+        :param w_clients: ожидающие клиенты
+        :param all_clients: все подключенные клиенты
+        :param messages_to_send: сообщение для отправки
+        :return: не возвращает значений
         """
         for client in messages_to_send:
             # Сохранить в историю сообщений на сервере
@@ -256,7 +339,12 @@ class ServerClient(threading.Thread, metaclass=ServerVerifier):
 
     # @log()
     def read_requests(self, r_clients, all_clients):
-        """ Чтение запросов из списка клиентов
+        """
+        Чтение запросов из списка клиентов
+
+        :param r_clients: Список клиентов, которые что-то прислали
+        :param all_clients: Список всех клиентов
+        :return: не возвращает значений
         """
         responses = {}  # Словарь ответов сервера вида {сокет: запрос}
         messages = {}  # Словарь сообщений
@@ -275,12 +363,23 @@ class ServerClient(threading.Thread, metaclass=ServerVerifier):
         return responses, messages
 
     def remove_from_active(self, sock):
+        """
+        Удалить клиента из активных
+
+        :param sock: Сокет отключенного клиента
+        :return: не возвращает значений
+        """
         for user in self.active_users.copy():
             if self.active_users[user] == sock:
                 self.active_users.pop(user, None)
 
     # @log()
     def run(self):
+        """
+        Основной метод класса. Запускает поток сервера.
+
+        :return: Не возвращает значений
+        """
         clients = []
         messages_to_send = {}
 
@@ -319,6 +418,7 @@ class ServerClient(threading.Thread, metaclass=ServerVerifier):
 
 @log()
 def main():
+    """Создание экземпляра класса, создание интерфейса, запуск клиента"""
     logger.info("Запуск сервера")
 
     args = get_arguments()
