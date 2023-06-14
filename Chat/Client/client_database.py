@@ -1,6 +1,7 @@
 from sqlalchemy.orm import declarative_base, sessionmaker
 from sqlalchemy import Column, Integer, String, DateTime, create_engine, MetaData, Table, or_, and_
 from datetime import datetime
+from sqlalchemy.sql import default_comparator
 
 
 class ClientDatabaseStorage:
