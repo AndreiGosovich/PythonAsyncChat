@@ -20,8 +20,7 @@ from PyQt6.QtCore import QTimer
 from server_database import ServerDatabaseStorage
 from gui_server import ServerWindow, AddUserDialogWindow
 
-sys.path.append("..")
-from log import server_log_config
+import server_log_config
 
 logger = logging.getLogger('chat.server')
 

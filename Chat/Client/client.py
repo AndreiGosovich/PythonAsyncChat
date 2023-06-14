@@ -19,7 +19,7 @@ sys.path.append(path)
 from client_database import ClientDatabaseStorage
 from gui_client import ClientWindow, ChatDialogWindow, AddContactDialogWindow,\
     DelContactDialogWindow
-from log import client_log_config
+import client_log_config
 
 logger = logging.getLogger('chat.client')
 
